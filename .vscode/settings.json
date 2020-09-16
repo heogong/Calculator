@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true
+  "files.eol": "\n",
+  "editor.renderWhitespace": "all",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.tabSize": 2,
+  "files.exclude": {
+      "node_modules": true
+  },
+  "search.exclude": {
+    "node_modules": true
+  },
+  "todo-tree.filtering.useBuiltInExcludes": "file excludes",
+  "editor.codeActionsOnSave": {"source.fixAll": true}
+}
