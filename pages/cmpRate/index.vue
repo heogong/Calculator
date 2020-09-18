@@ -33,21 +33,11 @@
       </b-field>
 
       <b-field label="이자율" :label-position="labelPosition">
-        <!-- <b-radio-button v-model="selectRatePeriod" :native-value="0">
-          일
-        </b-radio-button>
-        <b-radio-button v-model="selectRatePeriod" :native-value="1">
-          월
-        </b-radio-button>
-        <b-radio-button v-model="selectRatePeriod" :native-value="2">
-          연
-        </b-radio-button> -->
-
         <template v-for="(period, index) in periodArray">
           <b-radio-button
             :key="index"
-            :native-value="index"
             v-model="selectRatePeriod"
+            :native-value="index"
             @input="selectRate"
             >{{ period.periodName }}</b-radio-button
           >
@@ -67,9 +57,9 @@
         <template v-for="(period, index) in periodArray">
           <b-radio-button
             :key="index"
+            v-model="selectPeriod"
             :native-value="index"
             :disabled="period.disabled"
-            v-model="selectPeriod"
             >{{ index === 1 ? '개월' : period.periodName }}</b-radio-button
           >
         </template>

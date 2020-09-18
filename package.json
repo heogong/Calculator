@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
+    "numeral": "^2.0.6",
     "nuxt": "^2.14.0",
     "nuxt-buefy": "^0.3.31"
   },
