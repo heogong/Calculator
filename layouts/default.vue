@@ -2,10 +2,10 @@
   <div class="contents-wrap">
     <nuxt class="body" />
     <footer class="footer">
-      <div class="content has-text-white">
+      <div class="content">
         <div>Copyright © 2020.09.11 All rights reserved.</div>
         <div>
-          <span class="has-text-white">더치페이계산기</span>
+          <span class="">더치페이계산기</span>
           by
           <a href="mailto:heogong79@gmail.com">heogong79@gmail.com</a>
         </div>
@@ -24,8 +24,8 @@ export default {
 
 <style scoped>
 .footer {
-  background-color: #181600;
-  padding: 1rem 1.5rem 1rem;
+  /* background-color: #181600; */
+  padding: 0.5rem 1.5rem 0.5rem;
 }
 
 a {

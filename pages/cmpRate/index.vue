@@ -84,77 +84,96 @@
           >
         </template>
       </b-field> -->
+      <section v-if="investmentArray.length > 0">
+        <div class="message is-warning">
+          <div class="message-body">
+            <b-field grouped>
+              <b-field label="총액" :label-position="labelPosition" expanded>
+                <b-input type="is-warning" size="is-small" disabled></b-input>
+              </b-field>
+              <b-field label="수익률" :label-position="labelPosition" expanded>
+                <b-input type="is-warning" size="is-small" disabled></b-input>
+              </b-field>
+              <b-field label="수익금" :label-position="labelPosition" expanded>
+                <b-input type="is-warning" size="is-small" disabled></b-input>
+              </b-field>
+            </b-field>
+          </div>
+        </div>
 
-      <b-table :data="investmentArray" :narrowed="true">
-        <template scope="props">
-          <b-table-column field="id" label="기간" width="70" numeric>
-            {{
-              `${props.row.id + 1}  ${
-                selectPeriod == 1
-                  ? '개월'
-                  : periodArray[selectPeriod].periodName
-              }`
-            }}
-          </b-table-column>
-
-          <b-table-column field="returnInvestValue" label="수익금" centered>
-            {{ props.row.returnInvestValue | numeral('0,0') }}
-          </b-table-column>
-
-          <b-table-column field="totalMoney" label="총 액" centered>
-            {{ props.row.totalMoney | numeral('0,0') }}
-            <!-- {{ props.row.totalMoney }} -->
-          </b-table-column>
-
-          <b-table-column label="수익률" centered>
-            <span
-              :class="[
-                'tag',
-                {
-                  'is-info':
-                    (props.row.totalMoney - Number(props.row.investment)) /
-                      Number(props.row.investment) <
-                    0,
-                },
-                {
-                  'is-danger':
-                    (props.row.totalMoney - Number(props.row.investment)) /
-                      Number(props.row.investment) >=
-                    0,
-                },
-              ]"
-            >
+        <b-table :data="investmentArray" :narrowed="true">
+          <template scope="props">
+            <b-table-column field="id" label="기간" width="70" numeric>
               {{
-                Math.round(
-                  ((props.row.totalMoney - Number(props.row.investment)) /
-                    Number(props.row.investment)) *
-                    100
-                )
-              }}%
-            </span>
-          </b-table-column>
+                `${props.row.id + 1}  ${
+                  selectPeriod == 1
+                    ? '개월'
+                    : periodArray[selectPeriod].periodName
+                }`
+              }}
+            </b-table-column>
 
-          <b-table-column field="regularly" label="정기투자금" width="200">
-            <b-input
-              v-model="props.row.regularly"
-              controls-position="compact"
-              type="is-warning"
-              controls-rounded
-              @input="setReCal(props.row.id)"
-            ></b-input>
-          </b-table-column>
-          <b-table-column field="rate" label="이율(%)" width="200">
-            <b-numberinput
-              v-model="props.row.rate"
-              controls-position="compact"
-              type="is-warning"
-              controls-rounded
-              :use-html5-validation="false"
-              @input="setReCal(props.row.id)"
-            ></b-numberinput>
-          </b-table-column>
-        </template>
-      </b-table>
+            <b-table-column field="returnInvestValue" label="수익금" centered>
+              {{ props.row.returnInvestValue | numeral('0,0') }}
+            </b-table-column>
+
+            <b-table-column field="totalMoney" label="총 액" centered>
+              {{ props.row.totalMoney | numeral('0,0') }}
+              <!-- {{ props.row.totalMoney }} -->
+            </b-table-column>
+
+            <b-table-column label="수익률" centered>
+              <span
+                :class="[
+                  'tag',
+                  {
+                    'is-info':
+                      (props.row.totalMoney - Number(props.row.investment)) /
+                        Number(props.row.investment) <
+                      0,
+                  },
+                  {
+                    'is-danger':
+                      (props.row.totalMoney - Number(props.row.investment)) /
+                        Number(props.row.investment) >=
+                      0,
+                  },
+                ]"
+              >
+                {{
+                  Math.round(
+                    ((props.row.totalMoney - Number(props.row.investment)) /
+                      Number(props.row.investment)) *
+                      100
+                  )
+                }}%
+              </span>
+            </b-table-column>
+
+            <b-table-column field="regularly" label="정기투자금" width="200">
+              <b-input
+                v-model="props.row.regularly"
+                controls-position="compact"
+                type="is-warning"
+                controls-rounded
+                size="is-small"
+                @input="setReCal(props.row.id)"
+              ></b-input>
+            </b-table-column>
+            <b-table-column field="rate" label="이율(%)" width="200">
+              <b-numberinput
+                v-model="props.row.rate"
+                controls-position="compact"
+                type="is-warning"
+                controls-rounded
+                :use-html5-validation="false"
+                size="is-small"
+                @input="setReCal(props.row.id)"
+              ></b-numberinput>
+            </b-table-column>
+          </template>
+        </b-table>
+      </section>
     </section>
   </section>
 </template>
@@ -349,8 +368,8 @@ export default {
     setReCal(selInx) {
       for (let i = selInx; i < this.investmentArray.length; i++) {
         const tempTotalMoney =
-          selInx === 0
-            ? this.investment
+          i === 0
+            ? this.investmentArray[i].totalMoney
             : this.investmentArray[i - 1].totalMoney
 
         // 이자
