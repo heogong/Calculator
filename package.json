@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "numeral": "^2.0.6",
     "nuxt": "^2.14.0",
-    "nuxt-buefy": "^0.3.31"
+    "nuxt-buefy": "^0.3.31",
+    "vue-numeral-filter": "^2.0.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
