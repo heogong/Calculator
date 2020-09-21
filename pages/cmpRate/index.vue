@@ -29,8 +29,7 @@
           @focus="delZero"
         ></b-input>
       </b-field>
-
-      <b-field label="이자율(%)" :label-position="labelPosition">
+      <b-field :label-position="labelPosition" expanded>
         <template v-for="(period, index) in periodArray">
           <b-radio-button
             :key="index"
@@ -40,18 +39,18 @@
             >{{ period.periodName }}</b-radio-button
           >
         </template>
-
-        <b-numberinput
-          v-model="rate"
-          controls-position="compact"
-          type="is-warning"
-          controls-rounded
-          step="1.0"
-          min-step="0.1"
-          :use-html5-validation="false"
-        ></b-numberinput>
+        <b-field label="이자율(%)" :label-position="labelPosition" expanded>
+          <b-numberinput
+            v-model="rate"
+            controls-position="compact"
+            type="is-warning"
+            step="1.0"
+            min-step="0.1"
+            :use-html5-validation="false"
+          ></b-numberinput>
+        </b-field>
       </b-field>
-      <b-field :label="setLable" :label-position="labelPosition">
+      <b-field :label="setLable" :label-position="labelPosition" expanded>
         <b-numberinput
           v-model="period"
           controls-position="compact"
@@ -62,44 +61,54 @@
           @input="setOutPutPeriod"
         ></b-numberinput>
       </b-field>
+
       <b-field>
         <b-button type="is-dark" expanded @click="calculation"
           >계산하기</b-button
         >
       </b-field>
 
-      <!-- <b-field label="출력" :label-position="labelPosition">
-        <template v-for="(period, index) in periodArray">
-          <b-radio-button
-            :key="index"
-            v-model="selectPeriod"
-            :native-value="index"
-            :disabled="period.disabled"
-            @input="calculation"
-            >{{
-              index === 1
-                ? `${period.periodValue}개월`
-                : `${period.periodValue}${period.periodName}`
-            }}</b-radio-button
-          >
-        </template>
-      </b-field> -->
       <section v-if="investmentArray.length > 0">
         <div class="message is-warning">
           <div class="message-body">
             <b-field grouped>
               <b-field label="총액" :label-position="labelPosition" expanded>
-                <b-input type="is-warning" size="is-small" disabled></b-input>
+                <b-input
+                  v-model="totalAmount"
+                  type="is-warning"
+                  disabled
+                ></b-input>
               </b-field>
               <b-field label="수익률" :label-position="labelPosition" expanded>
-                <b-input type="is-warning" size="is-small" disabled></b-input>
+                <b-input type="is-warning" disabled></b-input>
               </b-field>
               <b-field label="수익금" :label-position="labelPosition" expanded>
-                <b-input type="is-warning" size="is-small" disabled></b-input>
+                <b-input
+                  v-model="totalRevenue"
+                  type="is-warning"
+                  disabled
+                ></b-input>
               </b-field>
             </b-field>
           </div>
         </div>
+
+        <b-field label="출력" :label-position="labelPosition">
+          <template v-for="(period, index) in periodArray">
+            <b-radio-button
+              :key="index"
+              v-model="selectPeriod"
+              :native-value="index"
+              :disabled="period.disabled"
+              @input="calculation"
+              >{{
+                index === 1
+                  ? `${period.periodValue}개월`
+                  : `${period.periodValue}${period.periodName}`
+              }}</b-radio-button
+            >
+          </template>
+        </b-field>
 
         <b-table :data="investmentArray" :narrowed="true">
           <template scope="props">
@@ -208,29 +217,10 @@ const PERIOD_ARRAY = [
     disabled: true,
   },
   {
-    periodName: '년',
+    periodName: '연',
     periodValue: '',
     rateValue: 0,
     disabled: true,
-  },
-]
-
-const COLUMN = [
-  {
-    field: 'id',
-    label: 'ID',
-  },
-  {
-    field: 'rate',
-    label: 'rate',
-  },
-  {
-    field: 'totalMoney',
-    label: 'totalMoney',
-  },
-  {
-    field: 'regularly',
-    label: '정기투자금',
   },
 ]
 
@@ -247,7 +237,6 @@ export default {
       selectRatePeriod: 0, // 이자율 기간 선택
       selectPeriod: 0, // 출력 일/월/연 기간
       period: 1,
-      dataColumn: COLUMN,
     }
   },
 
@@ -261,32 +250,18 @@ export default {
         }
         )`
     },
-    // periodArray() {
-    //   return this.ratePeriodArray.
-    // },
-    // selectRatePeriod: {
-    //   get() {
-    //     return 0
-    //   },
-    //   set(value) {
-    //     this.periodArray.map((period, i) => {
-    //       if (i <= value) {
-    //         period.disabled = false
-    //       }
-    //     })
-    //   },
-    // },
+    totalAmount() {
+      return this.investmentArray[this.investmentArray.length - 1].totalMoney
+    },
+    totalRevenue() {
+      return (
+        this.investmentArray[this.investmentArray.length - 1].totalMoney -
+        Number(this.investment)
+      )
+    },
   },
 
   methods: {
-    initInvest() {
-      this.$set(this.investmentArray[0], 'investment', this.investment)
-      // this.$set(this.investmentArray[0], 'rate', this.rate)
-      // this.$set(this.investmentArray[0], 'regularly', this.regularly)
-
-      this.setRate()
-    },
-
     selectRate() {
       this.setOutPutPeriod()
       this.periodArray.map((period, i) => {
@@ -348,6 +323,7 @@ export default {
         investmentData.id = index
 
         // 이자
+        // investmentData.rate = period.rateValue.toFixed(3)
         investmentData.rate = period.rateValue
         investmentData.regularly =
           index === 0 ? 0 : Number(investmentData.regularly)
@@ -368,9 +344,7 @@ export default {
     setReCal(selInx) {
       for (let i = selInx; i < this.investmentArray.length; i++) {
         const tempTotalMoney =
-          i === 0
-            ? this.investmentArray[i].totalMoney
-            : this.investmentArray[i - 1].totalMoney
+          i === 0 ? this.investment : this.investmentArray[i - 1].totalMoney
 
         // 이자
         this.investmentArray[i].returnInvestValue =
