@@ -39,7 +39,7 @@
             >{{ period.periodName }}</b-radio-button
           >
         </template>
-        <b-field label="이자율(%)" :label-position="labelPosition" expanded>
+        <b-field label="이율(%)" :label-position="labelPosition" expanded>
           <b-numberinput
             v-model="rate"
             controls-position="compact"
@@ -108,6 +108,15 @@
               }}</b-radio-button
             >
           </template>
+        </b-field>
+        <b-field>
+          <div>
+            <h6 class="subtitle is-7 has-text-grey">
+              <b-icon icon="check" size="is-small"> </b-icon>출력변경 시
+              이율(%)이 소수점 3째자리 까지 계산되어 수익금이 상이하니, 참고만
+              하시길 바랍니다.
+            </h6>
+          </div>
         </b-field>
 
         <b-table :data="investmentArray" :narrowed="true">
@@ -252,12 +261,16 @@ export default {
     },
     totalAmount() {
       return this.investmentArray[this.investmentArray.length - 1].totalMoney
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
     totalRevenue() {
       return (
         this.investmentArray[this.investmentArray.length - 1].totalMoney -
         Number(this.investment)
       )
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
   },
 
@@ -272,6 +285,8 @@ export default {
     },
 
     setOutPutPeriod() {
+      this.investmentArray = [] // 기간 변경 시 초기화
+
       if (this.selectRatePeriod === 2) {
         this.periodArray[2].periodValue = this.period
         this.periodArray[1].periodValue = this.period * 12
@@ -323,8 +338,8 @@ export default {
         investmentData.id = index
 
         // 이자
-        // investmentData.rate = period.rateValue.toFixed(3)
-        investmentData.rate = period.rateValue
+        investmentData.rate = parseFloat(period.rateValue.toFixed(3))
+        // investmentData.rate = period.rateValue
         investmentData.regularly =
           index === 0 ? 0 : Number(investmentData.regularly)
 
