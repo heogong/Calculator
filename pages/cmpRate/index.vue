@@ -36,6 +36,7 @@
               <b-radio-button
                 :key="index"
                 v-model="selectRatePeriod"
+                size="is-small"
                 :native-value="index"
                 @input="selectRate"
                 >{{ index == 2 ? '연' : period.periodName }}</b-radio-button
@@ -44,6 +45,7 @@
 
             <b-numberinput
               v-model="rate"
+              size="is-small"
               controls-position="compact"
               type="is-warning"
               step="1.0"
@@ -56,10 +58,12 @@
         <b-field :label="setLable" custom-class="is-small" expanded>
           <b-numberinput
             v-model="period"
+            size="is-small"
             controls-position="compact"
             type="is-warning"
             step="1"
             min="1"
+            pattern="[0-9]*"
             expanded
             @input="setOutPutPeriod"
           ></b-numberinput>
@@ -82,7 +86,7 @@
       <section v-if="investmentArray.length > 0">
         <div class="message is-warning">
           <div class="message-body">
-            <b-field grouped>
+            <b-field grouped group-multiline>
               <b-field label="총액" :label-position="labelPosition" expanded>
                 <b-input
                   v-model="totalAmount"
