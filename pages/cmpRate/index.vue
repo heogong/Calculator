@@ -481,7 +481,7 @@ export default {
   },
 
   head: {
-    title: '스마트 복리계산기',
+    title: '스마트 복리계산기 - 정기투자 / 이율 조절 스마트 복리계산기',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -492,7 +492,6 @@ export default {
           '정기금액 기능 및 일 / 월 / 연으로 표시 가능한 복리계산기 입니다.',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon-16x16.png' }],
   },
 }
 </script>
