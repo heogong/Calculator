@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            <span>스마트 복리 계산기</span>
+            <span>스마트 복리계산기</span>
           </h1>
           <!-- <h2 class="subtitle has-text-grey">
             - 1차, 2차, n차... 개별 금액계산기
@@ -75,6 +75,9 @@
           >계산하기</b-button
         >
       </b-field>
+      <b-field>
+        <kakao-ad />
+      </b-field>
 
       <section v-if="investmentArray.length > 0">
         <div class="message is-warning">
@@ -88,7 +91,8 @@
                 ></b-input>
               </b-field>
               <b-field label="수익률" :label-position="labelPosition" expanded>
-                <b-input type="is-warning" disabled></b-input>
+                <b-input v-model="totalPlusPer" type="is-warning" disabled>
+                </b-input>
               </b-field>
               <b-field label="수익금" :label-position="labelPosition" expanded>
                 <b-input
@@ -222,6 +226,8 @@
 </template>
 
 <script>
+import kakaoAd from '~/components/KakaoAd'
+
 /**
  * investment : 투자원금
  * rate : 이율
@@ -262,6 +268,9 @@ const PERIOD_ARRAY = [
 ]
 
 export default {
+  components: {
+    kakaoAd,
+  },
   data() {
     return {
       labelPosition: 'on-border',
@@ -299,6 +308,21 @@ export default {
       )
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
+
+    totalPlusPer() {
+      return (
+        Math.round(
+          ((this.investmentArray[this.investmentArray.length - 1].totalMoney -
+            Number(
+              this.investmentArray[this.investmentArray.length - 1].investment
+            )) /
+            Number(
+              this.investmentArray[this.investmentArray.length - 1].investment
+            )) *
+            100
+        ) + '%'
+      )
     },
 
     isInvestment() {
@@ -450,14 +474,18 @@ export default {
   },
 
   head: {
-    title: '',
+    title: '스마트 복리계산기',
     meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
-        hid: '복리 계산기',
-        name: '복리 계산기',
-        content: '복리 계산기',
+        hid: '스마트 복리계산기',
+        name: '스마트 복리계산기',
+        content:
+          '정기금액 기능 및 일 / 월 / 연으로 표시 가능한 복리계산기 입니다.',
       },
     ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon-16x16.png' }],
   },
 }
 </script>

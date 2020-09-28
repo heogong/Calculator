@@ -53,7 +53,9 @@ export default {
   modules: [
     // Doc: https://buefy.github.io/#/documentation
     'nuxt-buefy',
+    '@nuxtjs/redirect-module',
   ],
+  redirect: [{ from: '^/rate(.*)$', to: '/cmpRate' }],
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/

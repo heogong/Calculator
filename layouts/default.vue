@@ -5,7 +5,7 @@
       <div class="content">
         <div>Copyright © 2020.09.11 All rights reserved.</div>
         <div>
-          <span class="">더치페이계산기</span>
+          <!-- <span class="">계산기</span> -->
           by
           <a href="mailto:heogong79@gmail.com">heogong79@gmail.com</a>
         </div>
