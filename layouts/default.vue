@@ -31,4 +31,9 @@ export default {
 a {
   color: #ffdd57;
 }
+
+.content {
+  color: #777;
+  font-size: 0.8em;
+}
 </style>

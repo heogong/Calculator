@@ -108,8 +108,7 @@
               v-model.lazy="selectPeriod"
               :native-value="index"
               :disabled="period.disabled"
-              @input="checkData(index)"
-              @click.native="aaa"
+              @input="calculation(index)"
               >{{
                 index === 1
                   ? `${period.periodValue}개월`
@@ -128,7 +127,12 @@
           </div>
         </b-field>
 
-        <b-table :data="investmentArray" :narrowed="true">
+        <b-table
+          :data="investmentArray"
+          :narrowed="true"
+          :paginated="true"
+          per-page="24"
+        >
           <template scope="props">
             <b-table-column field="id" label="기간" width="70" numeric>
               {{
@@ -351,22 +355,17 @@ export default {
       }
     },
 
-    aaa(index) {
-      console.log(this.selectPeriod)
-    },
-
-    checkData(index) {
-      const aa = this.investmentArray.some((v) => Number(v.regularly) > 0)
-      if (aa) {
-        this.$buefy.dialog.confirm({
-          message: '정기투자금이 초기화 됩니다 변경 하시겠습니까?',
-          onConfirm: () => this.calculation(),
-          // onCancel: () => (this.selectPeriod = this.selectPeriod),
-        })
-      } else {
-        this.calculation()
-      }
-    },
+    // checkData(index) {
+    //   const aa = this.investmentArray.some((v) => Number(v.regularly) > 0)
+    //   if (aa) {
+    //     this.$buefy.dialog.confirm({
+    //       message: '정기투자금이 초기화 됩니다 변경 하시겠습니까?',
+    //       onConfirm: () => this.calculation(),
+    //     })
+    //   } else {
+    //     this.calculation()
+    //   }
+    // },
 
     calculation() {
       // 초기화
