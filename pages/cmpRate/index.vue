@@ -88,10 +88,16 @@
                   v-model="totalAmount"
                   type="is-warning"
                   disabled
+                  custom-class="has-text-black"
                 ></b-input>
               </b-field>
               <b-field label="수익률" :label-position="labelPosition" expanded>
-                <b-input v-model="totalPlusPer" type="is-warning" disabled>
+                <b-input
+                  v-model="totalPlusPer"
+                  type="is-warning"
+                  disabled
+                  custom-class="has-text-black"
+                >
                 </b-input>
               </b-field>
               <b-field label="수익금" :label-position="labelPosition" expanded>
@@ -99,6 +105,7 @@
                   v-model="totalRevenue"
                   type="is-warning"
                   disabled
+                  custom-class="has-text-black"
                 ></b-input>
               </b-field>
             </b-field>
