@@ -24,6 +24,12 @@ export default {
         content: 'N차까지 각자 금액을 산출할 수 있는 더치페이 계산기 입니다.',
       },
     ],
+    script: [
+      {
+        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+        async: true,
+      },
+    ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon-16x16.png' }],
   },
   /*
@@ -54,8 +60,15 @@ export default {
     // Doc: https://buefy.github.io/#/documentation
     'nuxt-buefy',
     '@nuxtjs/redirect-module',
+    [
+      '@nuxtjs/google-adsense',
+      {
+        id: 'ca-pub-6427355931978753',
+      },
+    ],
   ],
   redirect: [{ from: '^/rate(.*)$', to: '/cmpRate' }],
+
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/

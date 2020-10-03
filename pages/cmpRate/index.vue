@@ -81,6 +81,7 @@
       </b-field>
       <b-field>
         <kakao-ad />
+        <!-- <google-ad /> -->
       </b-field>
 
       <section v-if="investmentArray.length > 0">
@@ -238,6 +239,7 @@
 
 <script>
 import kakaoAd from '~/components/KakaoAd'
+// import googleAd from '~/components/GoogleAd'
 
 /**
  * investment : 투자원금
@@ -281,6 +283,7 @@ const PERIOD_ARRAY = [
 export default {
   components: {
     kakaoAd,
+    // googleAd,
   },
   data() {
     return {
