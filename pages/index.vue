@@ -1,13 +1,13 @@
 <template>
-  <dutch-page />
+	<dutch-page />
 </template>
 
 <script>
 import dutchPage from './dutch'
 export default {
-  components: {
-    dutchPage,
-  },
+	components: {
+		dutchPage,
+	},
 }
 </script>
 
