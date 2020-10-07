@@ -13,13 +13,13 @@
 				<template slot-scope="props">
 					<div class="media">
 						<div class="media-left">
-							<!-- <fetch-data
+							<fetch-data
 								:url="`https://cloud.iexapis.com/stable/stock/${props.option.symbol}/logo?token=pk_bae6de0699bc4db482e826631e82db06`"
 							>
-								<div slot-scope="{ response }">
+								<div v-if="loading" slot-scope="{ response, loading }">
 									<img width="32" :src="response.data.url" />
 								</div>
-							</fetch-data> -->
+							</fetch-data>
 						</div>
 						<div class="media-content">
 							{{ props.option.symbol }}
@@ -29,16 +29,6 @@
 					</div>
 				</template>
 			</b-autocomplete>
-		</b-field>
-		<b-field>
-			<fetch-data
-				:url="`https://cloud.iexapis.com/stable/stock/aapl/logo?token=pk_bae6de0699bc4db482e826631e82db06`"
-			>
-				<div slot-scope="{ response }">
-					<img width="32" :src="response.data.url" />
-					{{ response.data.url }}
-				</div>
-			</fetch-data>
 		</b-field>
 	</section>
 </template>
