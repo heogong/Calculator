@@ -18,7 +18,9 @@
   "dependencies": {
     "@nuxtjs/google-adsense": "^1.1.3",
     "@nuxtjs/redirect-module": "^0.3.1",
+    "axios": "^0.20.0",
     "dotenv": "^8.2.0",
+    "lodash": "^4.17.20",
     "nuxt": "^2.14.0",
     "nuxt-buefy": "^0.3.31",
     "vue-numeral-filter": "^2.0.0"
