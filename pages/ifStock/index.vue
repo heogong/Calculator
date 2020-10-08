@@ -1,25 +1,20 @@
 <template>
-	<section>
+	<section class="section">
 		<p class="content"><b>Selected:</b> {{ selected }}</p>
 		<b-field label="Find a movie">
 			<b-autocomplete
-				:data="data"
+				:data="symbolData"
 				placeholder="e.g. Fight Club"
 				field="title"
 				:loading="isFetching"
+				:clearable="true"
 				@typing="getAsyncData"
 				@select="option => (selected = option)"
 			>
 				<template slot-scope="props">
 					<div class="media">
 						<div class="media-left">
-							<fetch-data
-								:url="`https://cloud.iexapis.com/stable/stock/${props.option.symbol}/logo?token=pk_bae6de0699bc4db482e826631e82db06`"
-							>
-								<div v-if="loading" slot-scope="{ response, loading }">
-									<img width="32" :src="response.data.url" />
-								</div>
-							</fetch-data>
+							<img width="32" :src="props.option.logoUrl" />
 						</div>
 						<div class="media-content">
 							{{ props.option.symbol }}
@@ -30,25 +25,65 @@
 				</template>
 			</b-autocomplete>
 		</b-field>
+		<b-field label="Select a date">
+			<b-datepicker
+				v-model="selectedDate"
+				placeholder="Click to select..."
+				icon="calendar-today"
+				trap-focus
+				@input="() => (compareStock[0].date = selectedDate)"
+			>
+			</b-datepicker>
+		</b-field>
+		<b-field>
+			<b-button @click="searchStock">Click Me</b-button>
+		</b-field>
+		<b-field grouped>
+			<b-field expanded>
+				<card />
+			</b-field>
+			<b-field expanded>
+				<card />
+			</b-field>
+		</b-field>
 	</section>
 </template>
 
 <script>
 import axios from 'axios'
 import _ from 'lodash'
-import FetchData from '~/components/FetchData'
+// import FetchData from '~/components/FetchData'
+import Card from '@/components/Card'
+
+const COMPARE_STOCK = [
+	{ date: new Date() },
+	{ date: new Date(Date.parse(new Date()) - 1 * 1000 * 60 * 60 * 24) },
+]
 
 export default {
 	components: {
-		FetchData,
+		// FetchData,
+		Card,
 	},
 	data() {
 		return {
-			data: [],
+			symbolData: [],
 			selected: null,
 			isFetching: false,
+			selectedDate: new Date(),
+			compareStock: COMPARE_STOCK,
 		}
 	},
+
+	// computed: {
+	// 	convertDate() {
+	// 		const dd = this.selectedDate.getDate().toString()
+	// 		const mm = (this.selectedDate.getMonth() + 1).toString()
+	// 		const yyyy = this.selectedDate.getFullYear().toString()
+
+	// 		return `${yyyy}${mm[1] ? mm : '0' + mm[0]}${dd[1] ? dd : '0' + dd[0]}`
+	// 	},
+	// },
 
 	methods: {
 		getAsyncData: _.debounce(function (symbol) {
@@ -62,17 +97,60 @@ export default {
 					`https://sandbox.iexapis.com/stable/search/${symbol}?token=Tsk_5b927ae7348c4bc486d0633873beec22`,
 				)
 				.then(({ data }) => {
-					this.data = []
-					data.map(item => this.data.push(item))
+					this.symbolData = []
+					data.map(item => this.getAddLogo(item))
 				})
 				.catch(error => {
-					this.data = []
+					this.symbolData = []
 					throw error
 				})
 				.finally(() => {
 					this.isFetching = false
 				})
-		}, 500),
+		}, 200),
+
+		getAddLogo(item) {
+			axios
+				.get(
+					`https://sandbox.iexapis.com/stable/stock/${item.symbol}/logo?token=Tsk_5b927ae7348c4bc486d0633873beec22`,
+				)
+				.then(({ data }) => {
+					const resultData = { ...item, logoUrl: data.url }
+					this.symbolData.push(resultData)
+				})
+				.catch(error => {
+					alert('[ERROR] FETCHING THE DATA', error)
+					console.log(error)
+				})
+		},
+
+		searchStock() {
+			this.compareStock.map(item => {
+				axios
+					.get(
+						`https://sandbox.iexapis.com/stable/stock/${
+							this.selected.symbol
+						}/chart/date/${this.convertDate(
+							item.date,
+						)}?chartByDay=true&token=Tsk_5b927ae7348c4bc486d0633873beec22 `,
+					)
+					.then(({ data }) => {
+						item.stock = data[0]
+					})
+					.catch(error => {
+						alert('[ERROR] FETCHING THE DATA', error)
+						console.log(error)
+					})
+			})
+		},
+
+		convertDate(date) {
+			const dd = date.getDate().toString()
+			const mm = (date.getMonth() + 1).toString()
+			const yyyy = date.getFullYear().toString()
+
+			return `${yyyy}${mm[1] ? mm : '0' + mm[0]}${dd[1] ? dd : '0' + dd[0]}`
+		},
 	},
 }
 </script>
