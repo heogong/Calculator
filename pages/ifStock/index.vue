@@ -55,6 +55,8 @@ import _ from 'lodash'
 // import FetchData from '~/components/FetchData'
 import Card from '@/components/Card'
 
+// https://api.exchangeratesapi.io/latest?base=USD&symbols=KRW : 환율api
+
 const COMPARE_STOCK = [
 	{ date: new Date() },
 	{ date: new Date(Date.parse(new Date()) - 1 * 1000 * 60 * 60 * 24) },
