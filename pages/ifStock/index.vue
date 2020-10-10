@@ -38,22 +38,23 @@
 		<b-field>
 			<b-button @click="searchStock">Click Me</b-button>
 		</b-field>
-		<b-field grouped>
+		<!-- <b-field grouped>
 			<b-field expanded>
 				<card />
 			</b-field>
 			<b-field expanded>
 				<card />
 			</b-field>
-		</b-field>
+		</b-field> -->
 	</section>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import _ from 'lodash'
 // import FetchData from '~/components/FetchData'
-import Card from '@/components/Card'
+// import Card from '@/components/Card'
+import { getSearchStock, getSymbol } from '@/api/index.js'
 
 // https://api.exchangeratesapi.io/latest?base=USD&symbols=KRW : 환율api
 
@@ -65,7 +66,7 @@ const COMPARE_STOCK = [
 export default {
 	components: {
 		// FetchData,
-		Card,
+		// Card,
 	},
 	data() {
 		return {
@@ -77,72 +78,28 @@ export default {
 		}
 	},
 
-	// computed: {
-	// 	convertDate() {
-	// 		const dd = this.selectedDate.getDate().toString()
-	// 		const mm = (this.selectedDate.getMonth() + 1).toString()
-	// 		const yyyy = this.selectedDate.getFullYear().toString()
-
-	// 		return `${yyyy}${mm[1] ? mm : '0' + mm[0]}${dd[1] ? dd : '0' + dd[0]}`
-	// 	},
-	// },
-
 	methods: {
-		getAsyncData: _.debounce(function (symbol) {
+		getAsyncData: _.debounce(async function (symbol) {
 			if (!symbol.length) {
 				this.data = []
 				return
 			}
 			this.isFetching = true
-			axios
-				.get(
-					`https://sandbox.iexapis.com/stable/search/${symbol}?token=Tsk_5b927ae7348c4bc486d0633873beec22`,
-				)
-				.then(({ data }) => {
-					this.symbolData = []
-					data.map(item => this.getAddLogo(item))
-				})
-				.catch(error => {
-					this.symbolData = []
-					throw error
-				})
-				.finally(() => {
-					this.isFetching = false
-				})
-		}, 200),
 
-		getAddLogo(item) {
-			axios
-				.get(
-					`https://sandbox.iexapis.com/stable/stock/${item.symbol}/logo?token=Tsk_5b927ae7348c4bc486d0633873beec22`,
-				)
-				.then(({ data }) => {
-					const resultData = { ...item, logoUrl: data.url }
-					this.symbolData.push(resultData)
-				})
-				.catch(error => {
-					alert('[ERROR] FETCHING THE DATA', error)
-					console.log(error)
-				})
-		},
+			const { data } = await getSymbol(symbol)
+			this.symbolData = []
+			data.map(item => this.symbolData.push(item))
+
+			this.isFetching = false
+		}, 200),
 
 		searchStock() {
 			this.compareStock.map(item => {
-				axios
-					.get(
-						`https://sandbox.iexapis.com/stable/stock/${
-							this.selected.symbol
-						}/chart/date/${this.convertDate(
-							item.date,
-						)}?chartByDay=true&token=Tsk_5b927ae7348c4bc486d0633873beec22 `,
-					)
-					.then(({ data }) => {
+				getSearchStock(this.selected.symbol, this.convertDate(item.date)).then(
+					({ data }) => {
 						item.stock = data[0]
-					})
-					.catch(error => {
-						alert('[ERROR] FETCHING THE DATA', error)
-						console.log(error)
-					})
+					},
+				)
 			})
 		},
 
