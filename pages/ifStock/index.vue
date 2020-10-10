@@ -36,37 +36,69 @@
 			</b-datepicker>
 		</b-field>
 		<b-field>
+			<b-radio-button
+				v-model="selectedCurrency"
+				native-value="USD"
+				type="is-danger"
+			>
+				<span>$</span>
+			</b-radio-button>
+
+			<b-radio-button
+				v-model="selectedCurrency"
+				native-value="KRW"
+				type="is-success"
+				@input="() => (amount = 0)"
+			>
+				<span>₩</span>
+			</b-radio-button>
+			<b-input v-model="amount"></b-input>
+			<template v-if="selectedCurrency === 'KRW'">
+				<b-button @click="conversionExchange">exchange</b-button>
+				{{ convertDate(selectedDate, 2) }} 기준
+			</template>
+		</b-field>
+		<b-field>
 			<b-button @click="searchStock">Click Me</b-button>
 		</b-field>
-		<!-- <b-field grouped>
-			<b-field expanded>
-				<card />
-			</b-field>
-			<b-field expanded>
-				<card />
-			</b-field>
-		</b-field> -->
+		<b-field>
+			<b-table :data="compareStock">
+				<template scope="props">
+					<template v-if="props.row.stock != null">
+						<b-table-column field="stock" label="날짜" centered>
+							{{ props.row.stock.date }}
+						</b-table-column>
+						<b-table-column field="stock" label="시가" centered>
+							{{ props.row.stock.open }}
+						</b-table-column>
+						<b-table-column field="stock" label="종가" centered>
+							{{ props.row.stock.close }}
+						</b-table-column>
+					</template>
+				</template>
+			</b-table>
+		</b-field>
 	</section>
 </template>
 
 <script>
-// import axios from 'axios'
 import _ from 'lodash'
 // import FetchData from '~/components/FetchData'
-// import Card from '@/components/Card'
-import { getSearchStock, getSymbol } from '@/api/index.js'
+import { getSearchStock, getSymbol, getKRWExchange } from '@/api/index'
 
 // https://api.exchangeratesapi.io/latest?base=USD&symbols=KRW : 환율api
 
 const COMPARE_STOCK = [
-	{ date: new Date() },
-	{ date: new Date(Date.parse(new Date()) - 1 * 1000 * 60 * 60 * 24) },
+	{ date: new Date(), stock: null },
+	{
+		date: new Date(Date.parse(new Date()) - 1 * 1000 * 60 * 60 * 24),
+		stock: null,
+	},
 ]
 
 export default {
 	components: {
 		// FetchData,
-		// Card,
 	},
 	data() {
 		return {
@@ -75,6 +107,8 @@ export default {
 			isFetching: false,
 			selectedDate: new Date(),
 			compareStock: COMPARE_STOCK,
+			selectedCurrency: 'USD',
+			amount: 0,
 		}
 	},
 
@@ -94,21 +128,32 @@ export default {
 		}, 200),
 
 		searchStock() {
-			this.compareStock.map(item => {
-				getSearchStock(this.selected.symbol, this.convertDate(item.date)).then(
-					({ data }) => {
-						item.stock = data[0]
-					},
+			this.compareStock.map(async item => {
+				const { data } = await getSearchStock(
+					this.selected.symbol,
+					this.convertDate(item.date, 1),
 				)
+				item.stock = data[0]
 			})
 		},
 
-		convertDate(date) {
+		async conversionExchange() {
+			const { data } = await getKRWExchange(
+				this.convertDate(this.selectedDate, 2),
+			)
+
+			this.selectedCurrency = 'USD'
+			this.amount = data.rates.USD * this.amount
+		},
+
+		convertDate(date, type) {
 			const dd = date.getDate().toString()
 			const mm = (date.getMonth() + 1).toString()
 			const yyyy = date.getFullYear().toString()
 
-			return `${yyyy}${mm[1] ? mm : '0' + mm[0]}${dd[1] ? dd : '0' + dd[0]}`
+			return type === 1
+				? `${yyyy}${mm[1] ? mm : '0' + mm[0]}${dd[1] ? dd : '0' + dd[0]}`
+				: `${yyyy}-${mm[1] ? mm : '0' + mm[0]}-${dd[1] ? dd : '0' + dd[0]}`
 		},
 	},
 }

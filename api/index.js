@@ -30,4 +30,18 @@ function getSymbol(symbol) {
 		})
 }
 
-export { getSearchStock, getSymbol }
+function getKRWExchange(date) {
+	return axios
+		.get(`https://api.exchangeratesapi.io/${date}`, {
+			params: {
+				base: 'KRW',
+				symbols: 'USD',
+			},
+		})
+		.catch(error => {
+			alert('[ERROR] getKRWExchange FETCHING THE DATA', error)
+			console.log(error)
+		})
+}
+
+export { getSearchStock, getSymbol, getKRWExchange }
