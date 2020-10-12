@@ -31,7 +31,8 @@
 				placeholder="Click to select..."
 				icon="calendar-today"
 				trap-focus
-				@input="() => (compareStock[0].date = selectedDate)"
+				:unselectable-days-of-week="[0, 6]"
+				:max-date="new Date(Date.parse(new Date()) - 1 * 1000 * 60 * 60 * 24)"
 			>
 			</b-datepicker>
 		</b-field>
@@ -55,9 +56,9 @@
 			<b-input v-model="amount"></b-input>
 			<template v-if="selectedCurrency === 'KRW'">
 				<b-button @click="conversionExchange">exchange</b-button>
-				{{ convertDate(selectedDate, 2) }} 기준
 			</template>
 		</b-field>
+		<b-filed>{{ exchangeDate }} 기준</b-filed>
 		<b-field>
 			<b-button @click="searchStock">Click Me</b-button>
 		</b-field>
@@ -74,6 +75,15 @@
 						<b-table-column field="stock" label="종가" centered>
 							{{ props.row.stock.close }}
 						</b-table-column>
+						<b-table-column field="stock" label="수량" centered>
+							{{ props.row.stock.stockCount }}
+						</b-table-column>
+						<b-table-column field="stock" label="금액" centered>
+							-
+						</b-table-column>
+						<b-table-column field="stock" label="수익률" centered>
+							-
+						</b-table-column>
 					</template>
 				</template>
 			</b-table>
@@ -86,12 +96,11 @@ import _ from 'lodash'
 // import FetchData from '~/components/FetchData'
 import { getSearchStock, getSymbol, getKRWExchange } from '@/api/index'
 
-// https://api.exchangeratesapi.io/latest?base=USD&symbols=KRW : 환율api
-
 const COMPARE_STOCK = [
-	{ date: new Date(), stock: null },
 	{
-		date: new Date(Date.parse(new Date()) - 1 * 1000 * 60 * 60 * 24),
+		stock: null,
+	},
+	{
 		stock: null,
 	},
 ]
@@ -105,10 +114,11 @@ export default {
 			symbolData: [],
 			selected: null,
 			isFetching: false,
-			selectedDate: new Date(),
+			selectedDate: null,
 			compareStock: COMPARE_STOCK,
 			selectedCurrency: 'USD',
 			amount: 0,
+			exchangeDate: null,
 		}
 	},
 
@@ -128,12 +138,20 @@ export default {
 		}, 200),
 
 		searchStock() {
-			this.compareStock.map(async item => {
-				const { data } = await getSearchStock(
-					this.selected.symbol,
-					this.convertDate(item.date, 1),
-				)
-				item.stock = data[0]
+			this.compareStock.map(async (item, index) => {
+				const callUrl =
+					index === 0
+						? `stock/${this.selected.symbol}/chart/date/${this.convertDate(
+								this.selectedDate,
+								1,
+						  )}`
+						: `stock/${this.selected.symbol}/chart/1d`
+
+				const { data } = await getSearchStock(callUrl)
+
+				item.stock = data[data.length - 1]
+				item.stock.stockCount =
+					index === 0 ? parseInt(this.amount / item.stock.close) : '-'
 			})
 		},
 
@@ -144,6 +162,7 @@ export default {
 
 			this.selectedCurrency = 'USD'
 			this.amount = data.rates.USD * this.amount
+			this.exchangeDate = data.date
 		},
 
 		convertDate(date, type) {

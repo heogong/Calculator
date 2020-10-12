@@ -6,18 +6,17 @@ const instance = axios.create({
 
 const token = 'Tsk_5b927ae7348c4bc486d0633873beec22'
 
-function getSearchStock(symbol, date) {
-	// chartByDay: true,
+function getSearchStock(url) {
 	return instance
-		.get(`stock/${symbol}/chart/date/${date}`, {
+		.get(url, {
 			params: {
 				chartByDay: true,
+				chartSimplify: true,
 				token,
 			},
 		})
 		.catch(error => {
 			alert('[ERROR] getSearchStock FETCHING THE DATA', error)
-			console.log(error)
 		})
 }
 
@@ -26,7 +25,6 @@ function getSymbol(symbol) {
 		.get(`search/${symbol}`, { params: { token } })
 		.catch(error => {
 			alert('[ERROR] getSymbol FETCHING THE DATA', error)
-			console.log(error)
 		})
 }
 
@@ -40,7 +38,6 @@ function getKRWExchange(date) {
 		})
 		.catch(error => {
 			alert('[ERROR] getKRWExchange FETCHING THE DATA', error)
-			console.log(error)
 		})
 }
 
