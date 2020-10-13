@@ -23,7 +23,8 @@
     "lodash": "^4.17.20",
     "nuxt": "^2.14.0",
     "nuxt-buefy": "^0.3.31",
-    "vue-numeral-filter": "^2.0.0"
+    "vue-numeral-filter": "^2.0.0",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",

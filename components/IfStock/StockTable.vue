@@ -1,5 +1,5 @@
 <template>
-	<b-table :data="data">
+	<b-table :data="stockData">
 		<template scope="props">
 			<template v-if="props.row.stock != null">
 				<b-table-column field="stock" label="날짜" centered>
@@ -11,14 +11,25 @@
 				<b-table-column field="stock" label="주가" centered>
 					{{ props.row.stock.close }}
 				</b-table-column>
-				<b-table-column field="stock" label="수량" centered>
-					{{ props.row.stock.stockCount }}
+				<b-table-column label="수량" centered>
+					{{ stockData[0].stock.stockCount }}
 				</b-table-column>
 				<b-table-column field="stock" label="금액($)" centered>
-					{{ parseFloat(props.row.stock.StockAmount).toFixed(3) }}
+					{{
+						parseFloat(
+							stockData[0].stock.stockCount * props.row.stock.close,
+						).toFixed(3)
+					}}
 				</b-table-column>
 				<b-table-column field="stock" label="수익률(%)" centered>
-					{{ parseFloat(props.row.stock.stockYield).toFixed(3) }}
+					{{
+						parseFloat(
+							((stockData[0].stock.stockCount * props.row.stock.close) /
+								amount -
+								1) *
+								100,
+						).toFixed(3)
+					}}
 				</b-table-column>
 			</template>
 		</template>
@@ -26,54 +37,11 @@
 </template>
 
 <script>
-import { getSearchStock } from '@/api/index'
-
 export default {
 	props: {
-		data: {
+		stockData: {
 			type: Array,
 			required: true,
-		},
-	},
-	data() {
-		return {
-			compareStock: [
-				{
-					stock: null,
-				},
-				{
-					stock: null,
-				},
-			],
-		}
-	},
-
-	methods: {
-		searchStock() {
-			this.compareStock.map(async (item, index) => {
-				const callUrl =
-					index === 0
-						? `stock/${this.selected.symbol}/chart/date/${this.convertDate(
-								this.selectedDate,
-								1,
-						  )}`
-						: `stock/${this.selected.symbol}/chart/1d`
-
-				const { data } = await getSearchStock(callUrl)
-
-				item.stock = data[data.length - 1]
-				item.stock.stockCount =
-					index === 0 ? parseInt(this.amount / item.stock.close) : '-'
-
-				item.stock.StockAmount =
-					index === 1
-						? this.compareStock[0].stock.stockCount * item.stock.close
-						: '-'
-				item.stock.stockYield =
-					index === 1
-						? (this.compareStock[1].stock.StockAmount / this.amount - 1) * 100
-						: '-'
-			})
 		},
 	},
 }
