@@ -1,5 +1,5 @@
 <template>
-	<b-table :data="compareStock">
+	<b-table :data="data">
 		<template scope="props">
 			<template v-if="props.row.stock != null">
 				<b-table-column field="stock" label="날짜" centered>
@@ -29,6 +29,12 @@
 import { getSearchStock } from '@/api/index'
 
 export default {
+	props: {
+		data: {
+			type: Array,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			compareStock: [

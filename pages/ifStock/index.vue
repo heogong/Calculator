@@ -60,7 +60,7 @@
 			<b-button @click="searchStock">Click Me</b-button>
 		</b-field>
 		<b-field>
-			<!-- <stock-table></stock-table> -->
+			<!-- <stock-table :data="compareStock"></stock-table> -->
 			<b-table :data="compareStock">
 				<template scope="props">
 					<template v-if="props.row.stock != null">
