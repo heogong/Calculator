@@ -49,20 +49,18 @@
 				v-model="selectedCurrency"
 				native-value="KRW"
 				type="is-success"
-				@input="() => (amount = 0)"
+				@input="() => (amount = 1)"
 			>
 				<span>₩</span>
 			</b-radio-button>
 			<b-input v-model="amount"></b-input>
-			<template v-if="selectedCurrency === 'KRW'">
-				<b-button @click="conversionExchange">exchange</b-button>
-			</template>
 		</b-field>
 		<b-filed>{{ exchangeDate }} 기준</b-filed>
 		<b-field>
 			<b-button @click="searchStock">Click Me</b-button>
 		</b-field>
 		<b-field>
+			<!-- <stock-table></stock-table> -->
 			<b-table :data="compareStock">
 				<template scope="props">
 					<template v-if="props.row.stock != null">
@@ -72,17 +70,28 @@
 						<b-table-column field="stock" label="시가" centered>
 							{{ props.row.stock.open }}
 						</b-table-column>
-						<b-table-column field="stock" label="종가" centered>
+						<b-table-column field="stock" label="주가" centered>
 							{{ props.row.stock.close }}
 						</b-table-column>
-						<b-table-column field="stock" label="수량" centered>
-							{{ props.row.stock.stockCount }}
+						<b-table-column label="수량" centered>
+							{{ compareStock[0].stock.stockCount }}
 						</b-table-column>
-						<b-table-column field="stock" label="금액" centered>
-							-
+						<b-table-column field="stock" label="금액($)" centered>
+							{{
+								parseFloat(
+									compareStock[0].stock.stockCount * props.row.stock.close,
+								).toFixed(3)
+							}}
 						</b-table-column>
-						<b-table-column field="stock" label="수익률" centered>
-							-
+						<b-table-column field="stock" label="수익률(%)" centered>
+							{{
+								parseFloat(
+									((compareStock[0].stock.stockCount * props.row.stock.close) /
+										amount -
+										1) *
+										100,
+								).toFixed(3)
+							}}
 						</b-table-column>
 					</template>
 				</template>
@@ -95,18 +104,20 @@
 import _ from 'lodash'
 // import FetchData from '~/components/FetchData'
 import { getSearchStock, getSymbol, getKRWExchange } from '@/api/index'
+// import StockTable from '@/components/IfStock/StockTable.vue'
 
 const COMPARE_STOCK = [
 	{
-		stock: null,
+		stock: {},
 	},
 	{
-		stock: null,
+		stock: {},
 	},
 ]
 
 export default {
 	components: {
+		// StockTable,
 		// FetchData,
 	},
 	data() {
@@ -117,7 +128,7 @@ export default {
 			selectedDate: null,
 			compareStock: COMPARE_STOCK,
 			selectedCurrency: 'USD',
-			amount: 0,
+			amount: 1,
 			exchangeDate: null,
 		}
 	},
@@ -137,8 +148,10 @@ export default {
 			this.isFetching = false
 		}, 200),
 
-		searchStock() {
-			this.compareStock.map(async (item, index) => {
+		async searchStock() {
+			if (this.selectedCurrency === 'KRW') await this.conversionExchange()
+
+			await this.compareStock.map(async (item, index) => {
 				const callUrl =
 					index === 0
 						? `stock/${this.selected.symbol}/chart/date/${this.convertDate(
@@ -149,9 +162,10 @@ export default {
 
 				const { data } = await getSearchStock(callUrl)
 
+				item.stock = null
 				item.stock = data[data.length - 1]
-				item.stock.stockCount =
-					index === 0 ? parseInt(this.amount / item.stock.close) : '-'
+
+				item.stock.stockCount = parseInt(this.amount / item.stock.close)
 			})
 		},
 
@@ -161,7 +175,7 @@ export default {
 			)
 
 			this.selectedCurrency = 'USD'
-			this.amount = data.rates.USD * this.amount
+			this.amount = parseFloat(data.rates.USD * this.amount).toFixed(2)
 			this.exchangeDate = data.date
 		},
 
