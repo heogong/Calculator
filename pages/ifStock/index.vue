@@ -20,7 +20,7 @@
 				v-model="selectedCurrency"
 				native-value="KRW"
 				type="is-success"
-				@input="() => (amount = 1)"
+				@input="() => $store.commit('IfStock/setAmount', 1)"
 			>
 				<span>₩</span>
 			</b-radio-button>
@@ -30,7 +30,7 @@
 		<b-field>
 			<b-button @click="searchStock">Click Me</b-button>
 		</b-field>
-		<b-field>
+		<b-field v-if="isFetching">
 			<stock-table :stock-data="compareStock"></stock-table>
 		</b-field>
 	</section>
@@ -40,6 +40,7 @@
 // import FetchData from '~/components/FetchData'
 import { mapGetters } from 'vuex'
 import { getSearchStock, getKRWExchange } from '@/api/index'
+
 import StockAuto from '@/components/IfStock/StockAuto.vue'
 import StockTable from '@/components/IfStock/StockTable.vue'
 import StockDate from '@/components/IfStock/StockDate.vue'
@@ -62,18 +63,27 @@ export default {
 	},
 	data() {
 		return {
-			isFetching: false,
 			compareStock: COMPARE_STOCK,
 			selectedCurrency: 'USD',
-			amount: 1,
 			exchangeDate: null,
+			isFetching: false,
 		}
 	},
 
-	computed: mapGetters({
-		getStock: 'IfStock/stock',
-		getSelectedDate: 'IfStock/selectedDate',
-	}),
+	computed: {
+		...mapGetters({
+			getStock: 'IfStock/stock',
+			getSelectedDate: 'IfStock/selectedDate',
+		}),
+		amount: {
+			get() {
+				return this.$store.getters['IfStock/amount']
+			},
+			set(value) {
+				this.$store.commit('IfStock/setAmount', value)
+			},
+		},
+	},
 
 	methods: {
 		async searchStock() {
@@ -94,6 +104,8 @@ export default {
 				item.stock = data[data.length - 1]
 
 				item.stock.stockCount = parseInt(this.amount / item.stock.close)
+
+				this.isFetching = true
 			})
 		},
 

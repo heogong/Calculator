@@ -16,19 +16,17 @@
 				</b-table-column>
 				<b-table-column field="stock" label="금액($)" centered>
 					{{
-						parseFloat(
-							stockData[0].stock.stockCount * props.row.stock.close,
-						).toFixed(3)
+						(stockData[0].stock.stockCount * props.row.stock.close)
+							| numeral('0,0')
 					}}
 				</b-table-column>
 				<b-table-column field="stock" label="수익률(%)" centered>
 					{{
-						parseFloat(
-							((stockData[0].stock.stockCount * props.row.stock.close) /
-								amount -
-								1) *
-								100,
-						).toFixed(3)
+						(((stockData[0].stock.stockCount * props.row.stock.close) /
+							getAmount -
+							1) *
+							100)
+							| numeral('0.00')
 					}}
 				</b-table-column>
 			</template>
@@ -37,6 +35,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
 	props: {
 		stockData: {
@@ -44,6 +44,10 @@ export default {
 			required: true,
 		},
 	},
+
+	computed: mapGetters({
+		getAmount: 'IfStock/amount',
+	}),
 }
 </script>
 

@@ -5,8 +5,9 @@
 		field="title"
 		:loading="isFetching"
 		:clearable="true"
+		:value="symbolTicker"
 		@typing="getAsyncData"
-		@select="option => $store.commit('IfStock/setStock', option)"
+		@select="option => selectOption(option)"
 	>
 		<template slot-scope="props">
 			<div class="media">
@@ -24,14 +25,12 @@
 </template>
 
 <script>
-// @select="option => this.$store.commit('IfStock/setStock', option)"
-// @select="option => (selected = option)"
 import _ from 'lodash'
 import { getSymbol } from '@/api/index'
 
 export default {
 	data() {
-		return { data: [] }
+		return { data: [], isFetching: false, symbolTicker: '' }
 	},
 	methods: {
 		getAsyncData: _.debounce(async function (symbol) {
@@ -47,6 +46,11 @@ export default {
 
 			this.isFetching = false
 		}, 200),
+
+		selectOption(option) {
+			this.$store.commit('IfStock/setStock', option)
+			this.symbolTicker = option.symbol
+		},
 	},
 }
 </script>

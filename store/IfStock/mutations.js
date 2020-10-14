@@ -5,4 +5,7 @@ export default {
 	setDate(state, date) {
 		state.selectedDate = date
 	},
+	setAmount(state, amount) {
+		state.amount = amount
+	},
 }

@@ -5,4 +5,7 @@ export default {
 	selectedDate(state) {
 		return state.selectedDate
 	},
+	amount(state) {
+		return state.amount
+	},
 }
