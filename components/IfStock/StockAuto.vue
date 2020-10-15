@@ -32,6 +32,7 @@ export default {
 	data() {
 		return { data: [], isFetching: false, symbolTicker: '' }
 	},
+
 	methods: {
 		getAsyncData: _.debounce(async function (symbol) {
 			if (!symbol.length) {

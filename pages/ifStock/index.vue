@@ -45,14 +45,7 @@ import StockAuto from '@/components/IfStock/StockAuto.vue'
 import StockTable from '@/components/IfStock/StockTable.vue'
 import StockDate from '@/components/IfStock/StockDate.vue'
 
-const COMPARE_STOCK = [
-	{
-		stock: {},
-	},
-	{
-		stock: {},
-	},
-]
+const CURRENCY = 'USD'
 
 export default {
 	components: {
@@ -63,8 +56,15 @@ export default {
 	},
 	data() {
 		return {
-			compareStock: COMPARE_STOCK,
-			selectedCurrency: 'USD',
+			compareStock: [
+				{
+					stock: {},
+				},
+				{
+					stock: {},
+				},
+			],
+			selectedCurrency: CURRENCY,
 			exchangeDate: null,
 			isFetching: false,
 		}
@@ -92,10 +92,9 @@ export default {
 			await this.compareStock.map(async (item, index) => {
 				const callUrl =
 					index === 0
-						? `stock/${this.getStock.symbol}/chart/date/${this.convertDate(
+						? `stock/${this.getStock.symbol}/chart/date/${this.$moment(
 								this.getSelectedDate,
-								1,
-						  )}`
+						  ).format('YYYYMMDD')}`
 						: `stock/${this.getStock.symbol}/chart/1d`
 
 				const { data } = await getSearchStock(callUrl)
@@ -110,24 +109,27 @@ export default {
 		},
 
 		async conversionExchange() {
-			const { data } = await getKRWExchange(
-				this.convertDate(this.getSelectedDate, 2),
-			)
+			const dateParam = this.$moment(this.getSelectedDate).format('YYYY-MM-DD')
+			const { data } = await getKRWExchange(dateParam)
 
-			this.selectedCurrency = 'USD'
+			this.selectedCurrency = CURRENCY
 			this.amount = parseFloat(data.rates.USD * this.amount).toFixed(2)
 			this.exchangeDate = data.date
 		},
+	},
 
-		convertDate(date, type) {
-			const dd = date.getDate().toString()
-			const mm = (date.getMonth() + 1).toString()
-			const yyyy = date.getFullYear().toString()
-
-			return type === 1
-				? `${yyyy}${mm[1] ? mm : '0' + mm[0]}${dd[1] ? dd : '0' + dd[0]}`
-				: `${yyyy}-${mm[1] ? mm : '0' + mm[0]}-${dd[1] ? dd : '0' + dd[0]}`
-		},
+	head: {
+		title: 'TEST',
+		meta: [
+			{ charset: 'utf-8' },
+			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+			{
+				hid: '스마트 복리계산기',
+				name: '스마트 복리계산기',
+				content:
+					'정기금액 기능 및 일 / 월 / 연으로 표시 가능한 복리계산기 입니다.',
+			},
+		],
 	},
 }
 </script>

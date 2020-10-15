@@ -22,11 +22,10 @@
 				</b-table-column>
 				<b-table-column field="stock" label="수익률(%)" centered>
 					{{
-						(((stockData[0].stock.stockCount * props.row.stock.close) /
+						((stockData[0].stock.stockCount * props.row.stock.close) /
 							getAmount -
-							1) *
-							100)
-							| numeral('0.00')
+							1)
+							| numeral('0.00%')
 					}}
 				</b-table-column>
 			</template>

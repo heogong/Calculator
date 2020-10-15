@@ -1,4 +1,13 @@
+// import path from 'path'
+// import fs from 'fs'
+
 export default {
+	// server: {
+	// 	https: {
+	// 		key: fs.readFileSync(path.resolve(__dirname, 'ssl/private.key')),
+	// 		cert: fs.readFileSync(path.resolve(__dirname, 'ssl/certificate.crt')),
+	// 	},
+	// },
 	/*
 	 ** Nuxt rendering mode
 	 ** See https://nuxtjs.org/api/configuration-mode

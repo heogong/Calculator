@@ -1,15 +1,6 @@
 import Vue from 'vue'
 import vueNumeralFilterInstaller from 'vue-numeral-filter'
+import vueMoment from 'vue-moment'
 
 Vue.use(vueNumeralFilterInstaller)
-
-// export default function () {
-//   Vue.mixin({
-//     filters: {
-//       setComma(value, format = '0,0', defaultValue) {
-//         const m = numeral(`${value}`)
-//         return m.format(format)
-//       },
-//     },
-//   })
-// }
+Vue.use(vueMoment)
