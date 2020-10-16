@@ -176,6 +176,8 @@
 // import kakaoLink from '~/components/KakaoLink'
 import kakaoAd from '~/components/KakaoAd'
 
+const APP_TITLE = '더치페이 계산기'
+
 const DEFAULT_MEMBER = {
 	payment: 0,
 	dutchPay: 0,
@@ -208,6 +210,10 @@ export default {
 			)
 			return this.setRoundMode(n)
 		},
+	},
+
+	created() {
+		this.$store.commit('setAppTitle', APP_TITLE)
 	},
 
 	methods: {

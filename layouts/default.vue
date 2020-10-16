@@ -1,21 +1,20 @@
 <template>
 	<div class="contents-wrap">
+		<header-form></header-form>
 		<nuxt class="body" />
-		<footer class="footer">
-			<div class="content">
-				<div>Copyright © 2020.09.11 All rights reserved.</div>
-				<div>
-					<!-- <span class="">계산기</span> -->
-					by
-					<a href="mailto:heogong79@gmail.com">heogong79@gmail.com</a>
-				</div>
-			</div>
-		</footer>
+		<footer-form></footer-form>
 	</div>
 </template>
 
 <script>
+import HeaderForm from '@/components/HeaderForm'
+import FooterForm from '@/components/FooterForm'
+
 export default {
+	components: {
+		HeaderForm,
+		FooterForm,
+	},
 	mounted() {
 		// window.Kakao.init('process.env.KAKAO_INIT_KEY')
 	},

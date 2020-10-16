@@ -46,6 +46,7 @@ import StockTable from '@/components/IfStock/StockTable.vue'
 import StockDate from '@/components/IfStock/StockDate.vue'
 
 const CURRENCY = 'USD'
+const APP_TITLE = '주식정보'
 
 export default {
 	components: {
@@ -54,6 +55,7 @@ export default {
 		StockTable,
 		// FetchData,
 	},
+
 	data() {
 		return {
 			compareStock: [
@@ -83,6 +85,10 @@ export default {
 				this.$store.commit('IfStock/setAmount', value)
 			},
 		},
+	},
+
+	created() {
+		this.$store.commit('setAppTitle', APP_TITLE)
 	},
 
 	methods: {

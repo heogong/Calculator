@@ -241,6 +241,8 @@
 import kakaoAd from '~/components/KakaoAd'
 // import googleAd from '~/components/GoogleAd'
 
+const APP_TITLE = '스마트 복리계산기'
+
 /**
  * investment : 투자원금
  * rate : 이율
@@ -342,6 +344,10 @@ export default {
 		isInvestment() {
 			return !Number(this.investment) > 0
 		},
+	},
+
+	created() {
+		this.$store.commit('setAppTitle', APP_TITLE)
 	},
 
 	methods: {
