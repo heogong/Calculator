@@ -1,17 +1,5 @@
 <template>
 	<section>
-		<section class="hero is-warning">
-			<div class="hero-body">
-				<div class="container">
-					<h1 class="title">
-						<span>더치페이 계산기</span>
-					</h1>
-					<h2 class="subtitle has-text-grey">
-						- 1차, 2차, n차... 개별 금액계산기
-					</h2>
-				</div>
-			</div>
-		</section>
 		<section class="section">
 			<header class="docs-header">
 				<h6 class="subtitle is-7 has-text-grey">
@@ -177,6 +165,7 @@
 import kakaoAd from '~/components/KakaoAd'
 
 const APP_TITLE = '더치페이 계산기'
+const APP_DESC = '1차, 2차, n차... 개별 금액계산기'
 
 const DEFAULT_MEMBER = {
 	payment: 0,
@@ -214,6 +203,7 @@ export default {
 
 	created() {
 		this.$store.commit('setAppTitle', APP_TITLE)
+		this.$store.commit('setAppDesc', APP_DESC)
 	},
 
 	methods: {

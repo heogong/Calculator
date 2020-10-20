@@ -45,8 +45,9 @@ import StockAuto from '@/components/IfStock/StockAuto.vue'
 import StockTable from '@/components/IfStock/StockTable.vue'
 import StockDate from '@/components/IfStock/StockDate.vue'
 
-const CURRENCY = 'USD'
 const APP_TITLE = '주식정보'
+const APP_DESC = ''
+const CURRENCY = 'USD'
 
 export default {
 	components: {
@@ -89,6 +90,7 @@ export default {
 
 	created() {
 		this.$store.commit('setAppTitle', APP_TITLE)
+		this.$store.commit('setAppDesc', APP_DESC)
 	},
 
 	methods: {

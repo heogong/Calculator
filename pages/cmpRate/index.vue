@@ -1,17 +1,5 @@
 <template>
 	<section>
-		<section class="hero is-warning">
-			<div class="hero-body">
-				<div class="container">
-					<h1 class="title">
-						<span>스마트 복리계산기</span>
-					</h1>
-					<!-- <h2 class="subtitle has-text-grey">
-            - 1차, 2차, n차... 개별 금액계산기
-          </h2> -->
-				</div>
-			</div>
-		</section>
 		<section class="section">
 			<b-field label="투자원금" :label-position="labelPosition">
 				<b-input
@@ -242,6 +230,7 @@ import kakaoAd from '~/components/KakaoAd'
 // import googleAd from '~/components/GoogleAd'
 
 const APP_TITLE = '스마트 복리계산기'
+const APP_DESC = ''
 
 /**
  * investment : 투자원금
@@ -348,6 +337,7 @@ export default {
 
 	created() {
 		this.$store.commit('setAppTitle', APP_TITLE)
+		this.$store.commit('setAppDesc', APP_DESC)
 	},
 
 	methods: {

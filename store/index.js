@@ -1,6 +1,6 @@
 export const state = () => ({
 	appTitle: '',
-	appDesc: null,
+	appDesc: '',
 })
 
 export const mutations = {
