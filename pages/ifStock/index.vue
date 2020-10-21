@@ -33,6 +33,9 @@
 		<b-field v-if="isFetching">
 			<stock-table :stock-data="compareStock"></stock-table>
 		</b-field>
+		<b-field>
+			<chart></chart>
+		</b-field>
 	</section>
 </template>
 
@@ -44,6 +47,7 @@ import { getSearchStock, getKRWExchange } from '@/api/index'
 import StockAuto from '@/components/IfStock/StockAuto.vue'
 import StockTable from '@/components/IfStock/StockTable.vue'
 import StockDate from '@/components/IfStock/StockDate.vue'
+import Chart from '@/components/Chart.vue'
 
 const APP_TITLE = '주식정보'
 const APP_DESC = ''
@@ -54,6 +58,7 @@ export default {
 		StockAuto,
 		StockDate,
 		StockTable,
+		Chart,
 		// FetchData,
 	},
 
@@ -95,7 +100,7 @@ export default {
 
 	methods: {
 		async searchStock() {
-			if (this.selectedCurrency === 'KRW') await this.conversionExchange()
+			if (this.selectedCurrency === 'KRW') await this.exchangeCurrency()
 
 			await this.compareStock.map(async (item, index) => {
 				const callUrl =
@@ -116,7 +121,7 @@ export default {
 			})
 		},
 
-		async conversionExchange() {
+		async exchangeCurrency() {
 			const dateParam = this.$moment(this.getSelectedDate).format('YYYY-MM-DD')
 			const { data } = await getKRWExchange(dateParam)
 

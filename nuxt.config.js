@@ -49,7 +49,10 @@ export default {
 	 ** Plugins to load before mounting the App
 	 ** https://nuxtjs.org/guide/plugins
 	 */
-	plugins: [{ src: '~/plugins/common-mixins.js', mode: 'client' }],
+	plugins: [
+		{ src: '~/plugins/common-mixins.js', mode: 'client' },
+		'~plugins/ChartPlugin.js',
+	],
 	/*
 	 ** Auto import components
 	 ** See https://nuxtjs.org/api/configuration-components
