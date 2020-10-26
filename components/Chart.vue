@@ -11,6 +11,27 @@ export default {
 		},
 	},
 
+	data() {
+		return {
+			aaa: [],
+		}
+	},
+
+	computed: {
+		chartData: {
+			get() {
+				return this.aaa
+			},
+			set() {
+				this.aaa.push(
+					this.stockData.map(value => {
+						return value.stock.stockCount * value.stock.close
+					}),
+				)
+			},
+		},
+	},
+
 	mounted() {
 		// const ctx = document.getElementById('myChart')
 		// const ctx = this.$refs.myChart.getContext('2d')
@@ -22,12 +43,13 @@ export default {
 				datasets: [
 					{
 						label: '# of Votes',
-						data: [
-							this.stockData[0].stock.stockCount *
-								this.stockData[0].stock.close,
-							this.stockData[0].stock.stockCount *
-								this.stockData[1].stock.close,
-						],
+						// data: [
+						// 	this.stockData[0].stock.stockCount *
+						// 		this.stockData[0].stock.close,
+						// 	this.stockData[0].stock.stockCount *
+						// 		this.stockData[1].stock.close,
+						// ],
+						data: [this.aaa],
 						backgroundColor: [
 							'rgba(255, 99, 132, 0.2)',
 							'rgba(54, 162, 235, 0.2)',
