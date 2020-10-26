@@ -5,9 +5,6 @@
 				<b-table-column field="stock" label="날짜" centered>
 					{{ props.row.stock.date }}
 				</b-table-column>
-				<b-table-column field="stock" label="시가" centered>
-					{{ props.row.stock.open }}
-				</b-table-column>
 				<b-table-column field="stock" label="주가" centered>
 					{{ props.row.stock.close }}
 				</b-table-column>

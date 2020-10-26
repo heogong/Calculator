@@ -1,9 +1,16 @@
 <template>
-	<canvas id="myChart" ref="myChart" width="400" height="400"></canvas>
+	<canvas id="myChart" ref="myChart" width="100" height="100"></canvas>
 </template>
 
 <script>
 export default {
+	props: {
+		stockData: {
+			type: Array,
+			required: true,
+		},
+	},
+
 	mounted() {
 		// const ctx = document.getElementById('myChart')
 		// const ctx = this.$refs.myChart.getContext('2d')
@@ -11,11 +18,16 @@ export default {
 		const myChart = new this.$_Chart(this.$refs.myChart.getContext('2d'), {
 			type: 'bar',
 			data: {
-				labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+				labels: [this.stockData[0].stock.date, this.stockData[1].stock.date],
 				datasets: [
 					{
 						label: '# of Votes',
-						data: [12, 19, 3, 5, 2, 3],
+						data: [
+							this.stockData[0].stock.stockCount *
+								this.stockData[0].stock.close,
+							this.stockData[0].stock.stockCount *
+								this.stockData[1].stock.close,
+						],
 						backgroundColor: [
 							'rgba(255, 99, 132, 0.2)',
 							'rgba(54, 162, 235, 0.2)',

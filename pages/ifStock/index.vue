@@ -30,11 +30,13 @@
 		<b-field>
 			<b-button @click="searchStock">Click Me</b-button>
 		</b-field>
-		<b-field v-if="isFetching">
-			<stock-table :stock-data="compareStock"></stock-table>
-		</b-field>
-		<b-field>
-			<chart></chart>
+		<b-field v-if="isFetching" grouped group-multiline>
+			<b-field expanded>
+				<stock-table :stock-data="compareStock"></stock-table>
+			</b-field>
+			<b-field expanded>
+				<chart :stock-data="compareStock"></chart>
+			</b-field>
 		</b-field>
 	</section>
 </template>
