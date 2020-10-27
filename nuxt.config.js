@@ -85,5 +85,12 @@ export default {
 	 ** Build configuration
 	 ** See https://nuxtjs.org/api/configuration-build/
 	 */
-	build: {},
+	build: {
+		html: {
+			minify: {
+				collapseWhitespace: true, // as @dario30186 mentioned
+				removeComments: true, // 👈 add this line
+			},
+		},
+	},
 }
