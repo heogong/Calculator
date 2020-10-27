@@ -12,7 +12,7 @@ export default {
 	 ** Nuxt rendering mode
 	 ** See https://nuxtjs.org/api/configuration-mode
 	 */
-	mode: 'universal',
+	mode: 'spa',
 	/*
 	 ** Nuxt target
 	 ** See https://nuxtjs.org/api/configuration-target
@@ -85,12 +85,5 @@ export default {
 	 ** Build configuration
 	 ** See https://nuxtjs.org/api/configuration-build/
 	 */
-	build: {
-		html: {
-			minify: {
-				collapseWhitespace: true, // as @dario30186 mentioned
-				removeComments: true, // 👈 add this line
-			},
-		},
-	},
+	build: {},
 }
