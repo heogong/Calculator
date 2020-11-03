@@ -1,18 +1,18 @@
 <template>
 	<div class="contents-wrap">
-		<!-- <header-form></header-form> -->
+		<header-form></header-form>
 		<nuxt class="body" />
 		<footer-form></footer-form>
 	</div>
 </template>
 
 <script>
-// import HeaderForm from '@/components/HeaderForm'
+import HeaderForm from '@/components/HeaderForm'
 import FooterForm from '@/components/FooterForm'
 
 export default {
 	components: {
-		// HeaderForm,
+		HeaderForm,
 		FooterForm,
 	},
 	mounted() {
