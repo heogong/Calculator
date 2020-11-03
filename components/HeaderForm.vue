@@ -46,9 +46,9 @@
 						<h1 class="title">
 							<span>{{ getTitle }}</span>
 						</h1>
-						<h2 v-if="getDesc !== ''" class="subtitle has-text-grey">
+						<!-- <h2 v-if="getDesc !== ''" class="subtitle has-text-grey">
 							- {{ getDesc }}
-						</h2>
+						</h2> -->
 					</div>
 				</div>
 			</div>
