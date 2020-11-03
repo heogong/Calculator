@@ -1,10 +1,11 @@
 import axios from 'axios'
 
 const instance = axios.create({
-	baseURL: 'https://sandbox.iexapis.com/stable/',
+	baseURL: 'https://cloud.iexapis.com/v1/',
 })
 
-const token = 'Tsk_5b927ae7348c4bc486d0633873beec22'
+const token = 'pk_bae6de0699bc4db482e826631e82db06'
+const testToken = 'Tsk_5b927ae7348c4bc486d0633873beec22' // 테스트할 수 있는 토큰
 
 function getSearchStock(url) {
 	return instance
@@ -21,9 +22,12 @@ function getSearchStock(url) {
 }
 
 function getSymbol(symbol) {
-	return instance
-		.get(`search/${symbol}`, { params: { token } })
+	return axios
+		.get(`https://sandbox.iexapis.com/stable/search/${symbol}`, {
+			params: { token: testToken },
+		})
 		.catch(error => {
+			console.log(error)
 			alert('[ERROR] getSymbol FETCHING THE DATA', error)
 		})
 }
