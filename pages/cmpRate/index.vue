@@ -68,7 +68,6 @@
 				>
 			</b-field>
 			<b-field>
-				<kakao-ad />
 				<!-- <google-ad /> -->
 			</b-field>
 
@@ -226,7 +225,6 @@
 </template>
 
 <script>
-import kakaoAd from '~/components/KakaoAd'
 // import googleAd from '~/components/GoogleAd'
 
 const APP_TITLE = '스마트 복리계산기'
@@ -273,7 +271,6 @@ const PERIOD_ARRAY = [
 
 export default {
 	components: {
-		kakaoAd,
 		// googleAd,
 	},
 	data() {

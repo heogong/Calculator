@@ -4,7 +4,7 @@
 		style="display: none"
 		:data-ad-unit="kakaoAdKey"
 		data-ad-width="320"
-		data-ad-height="50"
+		data-ad-height="100"
 	></ins>
 </template>
 
@@ -15,7 +15,6 @@ export default {
 			kakaoAdKey: process.env.KAKAO_AD_KEY,
 		}
 	},
-
 	head: {
 		script: [
 			{

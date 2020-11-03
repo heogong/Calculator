@@ -153,16 +153,11 @@
         :total="setComma(totalPayment)"
       />
     </section> -->
-
-		<section>
-			<kakao-ad />
-		</section>
 	</section>
 </template>
 
 <script>
 // import kakaoLink from '~/components/KakaoLink'
-import kakaoAd from '~/components/KakaoAd'
 
 const APP_TITLE = '더치페이 계산기'
 const APP_DESC = '1차, 2차, n차... 개별 금액계산기'
@@ -175,7 +170,6 @@ const DEFAULT_MEMBER = {
 export default {
 	components: {
 		// kakaoLink,
-		kakaoAd,
 	},
 
 	data() {
