@@ -12,7 +12,8 @@
 export default {
 	data() {
 		return {
-			kakaoAdKey: process.env.KAKAO_AD_KEY,
+			// kakaoAdKey: process.env.KAKAO_AD_KEY,
+			kakaoAdKey: 'DAN-1ji28rvfxwjlh',
 		}
 	},
 	head: {
