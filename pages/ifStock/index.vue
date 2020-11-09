@@ -1,8 +1,39 @@
 <template>
 	<section class="section">
-		<p class="content"><b>Selected:</b> {{ getStock }}</p>
-		<b-field label="Find a movie">
-			<stock-auto></stock-auto>
+		<b-field label="">
+			<stock-auto @callStockCompany="fnCallStockCompany"></stock-auto>
+		</b-field>
+
+		<b-field>
+			<div class="card">
+				<div class="card-content">
+					<div class="media">
+						<div class="media-left">
+							<figure class="image is-48x48">
+								<img
+									src="https://bulma.io/images/placeholders/96x96.png"
+									alt="Placeholder image"
+								/>
+							</figure>
+						</div>
+						<div class="media-content">
+							<p class="title is-4">{{ stockCompanyInfo.companyName }}</p>
+							<p class="subtitle is-6">{{ stockCompanyInfo.exchange }}</p>
+						</div>
+					</div>
+
+					<div class="content">
+						{{ stockCompanyInfo.description }}
+						<a :href="stockCompanyInfo.website" target="_blank">{{
+							stockCompanyInfo.website
+						}}</a
+						>.
+						<template v-for="(tag, index) in stockCompanyInfo.tags">
+							<a :key="index" href="#">#{{ tag }} </a>
+						</template>
+					</div>
+				</div>
+			</div>
 		</b-field>
 		<b-field label="Select a date">
 			<stock-date></stock-date>
@@ -44,7 +75,7 @@
 <script>
 // import FetchData from '~/components/FetchData'
 import { mapGetters } from 'vuex'
-import { getSearchStock, getKRWExchange } from '@/api/index'
+import { getSearchStock, getKRWExchange, getStockCompany } from '@/api/index'
 
 import StockAuto from '@/components/IfStock/StockAuto.vue'
 import StockTable from '@/components/IfStock/StockTable.vue'
@@ -77,6 +108,7 @@ export default {
 			selectedCurrency: CURRENCY,
 			exchangeDate: null,
 			isFetching: false,
+			stockCompanyInfo: {},
 		}
 	},
 
@@ -130,6 +162,12 @@ export default {
 			this.selectedCurrency = CURRENCY
 			this.amount = parseFloat(data.rates.USD * this.amount).toFixed(2)
 			this.exchangeDate = data.date
+		},
+
+		async fnCallStockCompany() {
+			const { data } = await getStockCompany(this.getStock.symbol)
+			this.stockCompanyInfo = data
+			console.log(data)
 		},
 	},
 

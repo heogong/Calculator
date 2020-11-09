@@ -21,6 +21,18 @@ function getSearchStock(url) {
 		})
 }
 
+function getStockCompany(symbol) {
+	return instance
+		.get(`stock/${symbol}/company`, {
+			params: {
+				token,
+			},
+		})
+		.catch(error => {
+			alert('[ERROR] getStockCompany FETCHING THE DATA', error)
+		})
+}
+
 function getSymbol(symbol) {
 	return axios
 		.get(`https://sandbox.iexapis.com/stable/search/${symbol}`, {
@@ -45,4 +57,4 @@ function getKRWExchange(date) {
 		})
 }
 
-export { getSearchStock, getSymbol, getKRWExchange }
+export { getSearchStock, getStockCompany, getSymbol, getKRWExchange }

@@ -51,6 +51,7 @@ export default {
 		selectOption(option) {
 			this.$store.commit('IfStock/setStock', option)
 			this.symbolTicker = option.symbol
+			this.$emit('callStockCompany')
 		},
 	},
 }
