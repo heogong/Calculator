@@ -43,13 +43,13 @@ export default {
 				datasets: [
 					{
 						label: '# of Votes',
-						// data: [
-						// 	this.stockData[0].stock.stockCount *
-						// 		this.stockData[0].stock.close,
-						// 	this.stockData[0].stock.stockCount *
-						// 		this.stockData[1].stock.close,
-						// ],
-						data: [this.aaa],
+						data: [
+							this.stockData[0].stock.stockCount *
+								this.stockData[0].stock.close,
+							this.stockData[0].stock.stockCount *
+								this.stockData[1].stock.close,
+						],
+						// data: [this.aaa],
 						backgroundColor: [
 							'rgba(255, 99, 132, 0.2)',
 							'rgba(54, 162, 235, 0.2)',
