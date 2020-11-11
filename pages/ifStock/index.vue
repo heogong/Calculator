@@ -82,7 +82,7 @@ import StockTable from '@/components/IfStock/StockTable.vue'
 import StockDate from '@/components/IfStock/StockDate.vue'
 import Chart from '@/components/Chart.vue'
 
-const APP_TITLE = '미국주식정보'
+const APP_TITLE = 'TEST'
 const APP_DESC = ''
 const CURRENCY = 'USD'
 

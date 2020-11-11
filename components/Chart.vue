@@ -13,24 +13,24 @@ export default {
 
 	data() {
 		return {
-			aaa: [],
+			aaa: this.stockData,
 		}
 	},
 
-	computed: {
-		chartData: {
-			get() {
-				return this.aaa
-			},
-			set() {
-				this.aaa.push(
-					this.stockData.map(value => {
-						return value.stock.stockCount * value.stock.close
-					}),
-				)
-			},
-		},
-	},
+	// computed: {
+	// 	chartData: {
+	// 		get() {
+	// 			return this.aaa
+	// 		},
+	// 		set() {
+	// 			this.aaa.push(
+	// 				this.stockData.map(value => {
+	// 					return value.stock.stockCount * value.stock.close
+	// 				}),
+	// 			)
+	// 		},
+	// 	},
+	// },
 
 	mounted() {
 		// const ctx = document.getElementById('myChart')
@@ -39,17 +39,17 @@ export default {
 		const myChart = new this.$_Chart(this.$refs.myChart.getContext('2d'), {
 			type: 'bar',
 			data: {
-				labels: [this.stockData[0].stock.date, this.stockData[1].stock.date],
+				labels: [this.aaa[0].stock.date, this.aaa[1].stock.date],
 				datasets: [
 					{
 						label: '# of Votes',
-						data: [
-							this.stockData[0].stock.stockCount *
-								this.stockData[0].stock.close,
-							this.stockData[0].stock.stockCount *
-								this.stockData[1].stock.close,
-						],
-						// data: [this.aaa],
+						// data: [
+						// 	this.stockData[0].stock.stockCount *
+						// 		this.stockData[0].stock.close,
+						// 	this.stockData[0].stock.stockCount *
+						// 		this.stockData[1].stock.close,
+						// ],
+						data: [111, 222],
 						backgroundColor: [
 							'rgba(255, 99, 132, 0.2)',
 							'rgba(54, 162, 235, 0.2)',
