@@ -35,32 +35,44 @@
 				</div>
 			</div>
 		</b-field>
-		<b-field label="Select a date">
-			<stock-date></stock-date>
-		</b-field>
-		<b-field>
-			<b-radio-button
-				v-model="selectedCurrency"
-				native-value="USD"
-				type="is-danger"
-			>
-				<span>$</span>
-			</b-radio-button>
+		<b-filed grouped>
+			<b-field expanded>
+				<stock-date></stock-date>
+			</b-field>
+			<b-field expanded>
+				<b-radio-button
+					v-model="selectedCurrency"
+					native-value="USD"
+					type="is-danger"
+				>
+					<span>$</span>
+				</b-radio-button>
 
-			<b-radio-button
-				v-model="selectedCurrency"
-				native-value="KRW"
-				type="is-success"
-				@input="() => $store.commit('IfStock/setAmount', 1)"
-			>
-				<span>₩</span>
-			</b-radio-button>
-			<b-input v-model="amount"></b-input>
-		</b-field>
+				<b-radio-button
+					v-model="selectedCurrency"
+					native-value="KRW"
+					type="is-success"
+					@input="() => $store.commit('IfStock/setAmount', 1)"
+				>
+					<span>₩</span>
+				</b-radio-button>
+				<b-input v-model="amount"></b-input>
+			</b-field>
+		</b-filed>
 		<b-filed>{{ exchangeDate }} 기준</b-filed>
 		<b-field>
 			<b-button @click="searchStock">Click Me</b-button>
 		</b-field>
+		<!-- <b-notification :closable="false">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+			fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+			laoreet elit
+			<b-loading
+				v-model="isFetching"
+				:is-full-page="true"
+				:can-cancel="true"
+			></b-loading>
+		</b-notification> -->
 		<b-field v-if="isFetching" grouped group-multiline>
 			<b-field expanded>
 				<stock-table :stock-data="compareStock"></stock-table>
@@ -108,6 +120,7 @@ export default {
 			selectedCurrency: CURRENCY,
 			exchangeDate: null,
 			isFetching: false,
+			isLoading: true,
 			stockCompanyInfo: {},
 		}
 	},
