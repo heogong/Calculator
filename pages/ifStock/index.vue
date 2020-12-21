@@ -78,7 +78,7 @@
 				<stock-table :stock-data="compareStock"></stock-table>
 			</b-field>
 			<b-field expanded>
-				<chart :stock-data="datacollection"></chart>
+				<chart :stock-data="compareStock"></chart>
 			</b-field>
 		</b-field>
 	</section>
@@ -139,17 +139,6 @@ export default {
 				this.$store.commit('IfStock/setAmount', value)
 			},
 		},
-
-		stockData1() {
-			return (
-				this.compareStock[0].stock.stockCount * this.compareStock[0].stock.close
-			)
-		},
-		stockData2() {
-			return (
-				this.compareStock[0].stock.stockCount * this.compareStock[1].stock.close
-			)
-		},
 	},
 
 	created() {
@@ -179,7 +168,7 @@ export default {
 				this.isFetching = true
 			})
 
-			await this.fillData()
+			// await this.fillData()
 		},
 
 		async exchangeCurrency() {
@@ -194,35 +183,28 @@ export default {
 		async fnCallStockCompany() {
 			const { data } = await getStockCompany(this.getStock.symbol)
 			this.stockCompanyInfo = data
-			console.log(data)
 		},
 
-		fillData() {
-			this.datacollection = {
-				labels: [
-					this.compareStock[0].stock.date,
-					this.compareStock[1].stock.date,
-				],
-				datasets: [
-					{
-						label: 'Data One',
-						backgroundColor: '#f87979',
-						// data: [
-						// 	this.compareStock[0].stock.stockCount *
-						// 		this.compareStock[0].stock.close,
-						// 	this.compareStock[0].stock.stockCount *
-						// 		this.compareStock[1].stock.close,
-						// ],
-
-						// data: [this.getRandomInt(), this.getRandomInt()],
-						data: [this.stockData1, this.stockData2],
-					},
-				],
-			}
-		},
-		getRandomInt() {
-			return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-		},
+		// fillData() {
+		// 	this.datacollection = {
+		// 		labels: [
+		// 			this.compareStock[0].stock.date,
+		// 			this.compareStock[1].stock.date,
+		// 		],
+		// 		datasets: [
+		// 			{
+		// 				label: 'Data One',
+		// 				backgroundColor: '#f87979',
+		// 				data: [
+		// 					this.compareStock[0].stock.stockCount *
+		// 						this.compareStock[0].stock.close,
+		// 					this.compareStock[0].stock.stockCount *
+		// 						this.compareStock[1].stock.close,
+		// 				],
+		// 			},
+		// 		],
+		// 	}
+		// },
 	},
 
 	head: {
