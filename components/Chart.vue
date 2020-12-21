@@ -13,32 +13,31 @@ export default {
 
 	data() {
 		return {
-			datacollection: {
-				labels: [this.stockData[0].stock.date, this.stockData[1].stock.date],
-				datasets: [
-					{
-						label: 'Data One',
-						backgroundColor: '#f87979',
-						data: [
-							this.stockData[0].stock.stockCount *
-								this.stockData[0].stock.close,
-							this.stockData[0].stock.stockCount *
-								this.stockData[1].stock.close,
-						],
-					},
-				],
-			},
+			// datacollection: {
+			// 	labels: [this.stockData[0].stock.date, this.stockData[1].stock.date],
+			// 	datasets: [
+			// 		{
+			// 			label: 'Data One',
+			// 			backgroundColor: '#f87979',
+			// 			data: [this.stockData1, this.stockData2],
+			// 		},
+			// 	],
+			// },
 			options: {
 				responsive: true,
-				maintainAspectRatio: false,
 			},
 		}
 	},
+	// watch: {
+	// 	chartData() {
+	// 		this.renderChart.update()
+	// 	},
+	// },
 
 	mounted() {
-		setTimeout(() => {
-			this.renderChart(this.datacollection, this.options)
-		}, 1000)
+		// setTimeout(() => {
+		this.renderChart(this.stockData, this.options)
+		// }, 1000)
 	},
 }
 </script>

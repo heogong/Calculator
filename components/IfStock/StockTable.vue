@@ -5,10 +5,10 @@
 				<b-table-column field="stock" label="날짜" centered>
 					{{ props.row.stock.date }}
 				</b-table-column>
-				<b-table-column field="stock" label="주가" centered>
+				<b-table-column field="stock" label="stock" centered>
 					{{ props.row.stock.close }}
 				</b-table-column>
-				<b-table-column label="수량" centered>
+				<b-table-column label="amount" centered>
 					{{ stockData[0].stock.stockCount }}
 				</b-table-column>
 				<b-table-column field="stock" label="금액($)" centered>

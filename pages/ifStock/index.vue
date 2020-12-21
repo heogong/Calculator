@@ -78,7 +78,7 @@
 				<stock-table :stock-data="compareStock"></stock-table>
 			</b-field>
 			<b-field expanded>
-				<chart :stock-data="compareStock"></chart>
+				<chart :stock-data="datacollection"></chart>
 			</b-field>
 		</b-field>
 	</section>
@@ -122,6 +122,7 @@ export default {
 			isFetching: false,
 			isLoading: true,
 			stockCompanyInfo: {},
+			datacollection: null,
 		}
 	},
 
@@ -166,6 +167,8 @@ export default {
 
 				this.isFetching = true
 			})
+
+			await this.fillData()
 		},
 
 		async exchangeCurrency() {
@@ -181,6 +184,27 @@ export default {
 			const { data } = await getStockCompany(this.getStock.symbol)
 			this.stockCompanyInfo = data
 			console.log(data)
+		},
+
+		fillData() {
+			this.datacollection = {
+				labels: [
+					this.compareStock[0].stock.date,
+					this.compareStock[1].stock.date,
+				],
+				datasets: [
+					{
+						label: 'Data One',
+						backgroundColor: '#f87979',
+						data: [
+							this.compareStock[0].stock.stockCount *
+								this.compareStock[0].stock.close,
+							this.compareStock[0].stock.stockCount *
+								this.compareStock[1].stock.close,
+						],
+					},
+				],
+			}
 		},
 	},
 

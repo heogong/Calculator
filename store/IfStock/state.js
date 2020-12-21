@@ -1,5 +1,5 @@
 export default () => ({
 	selectedStock: null,
 	selectedDate: null,
-	amount: 1,
+	amount: 1000,
 })
