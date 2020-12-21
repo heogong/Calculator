@@ -139,6 +139,17 @@ export default {
 				this.$store.commit('IfStock/setAmount', value)
 			},
 		},
+
+		stockData1() {
+			return (
+				this.compareStock[0].stock.stockCount * this.compareStock[0].stock.close
+			)
+		},
+		stockData2() {
+			return (
+				this.compareStock[0].stock.stockCount * this.compareStock[1].stock.close
+			)
+		},
 	},
 
 	created() {
@@ -196,15 +207,21 @@ export default {
 					{
 						label: 'Data One',
 						backgroundColor: '#f87979',
-						data: [
-							this.compareStock[0].stock.stockCount *
-								this.compareStock[0].stock.close,
-							this.compareStock[0].stock.stockCount *
-								this.compareStock[1].stock.close,
-						],
+						// data: [
+						// 	this.compareStock[0].stock.stockCount *
+						// 		this.compareStock[0].stock.close,
+						// 	this.compareStock[0].stock.stockCount *
+						// 		this.compareStock[1].stock.close,
+						// ],
+
+						// data: [this.getRandomInt(), this.getRandomInt()],
+						data: [this.stockData1, this.stockData2],
 					},
 				],
 			}
+		},
+		getRandomInt() {
+			return Math.floor(Math.random() * (50 - 5 + 1)) + 5
 		},
 	},
 

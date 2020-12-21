@@ -6,7 +6,7 @@ export default {
 
 	props: {
 		stockData: {
-			type: Array,
+			type: Object,
 			required: true,
 		},
 	},
