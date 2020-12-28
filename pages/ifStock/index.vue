@@ -63,22 +63,12 @@
 		<b-field>
 			<b-button @click="searchStock">Click Me</b-button>
 		</b-field>
-		<!-- <b-notification :closable="false">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
-			fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
-			laoreet elit
-			<b-loading
-				v-model="isFetching"
-				:is-full-page="true"
-				:can-cancel="true"
-			></b-loading>
-		</b-notification> -->
 		<b-field v-if="isFetching" grouped group-multiline>
 			<b-field expanded>
 				<stock-table :stock-data="compareStock"></stock-table>
 			</b-field>
 			<b-field expanded>
-				<chart :stock-data="compareStock"></chart>
+				<chart :stock-data="datacollection"></chart>
 			</b-field>
 		</b-field>
 	</section>
@@ -139,6 +129,17 @@ export default {
 				this.$store.commit('IfStock/setAmount', value)
 			},
 		},
+
+		stockData1() {
+			return (
+				this.compareStock[0].stock.stockCount * this.compareStock[0].stock.close
+			)
+		},
+		stockData2() {
+			return (
+				this.compareStock[0].stock.stockCount * this.compareStock[1].stock.close
+			)
+		},
 	},
 
 	created() {
@@ -168,7 +169,7 @@ export default {
 				this.isFetching = true
 			})
 
-			// await this.fillData()
+			await this.fillChartData()
 		},
 
 		async exchangeCurrency() {
@@ -185,26 +186,21 @@ export default {
 			this.stockCompanyInfo = data
 		},
 
-		// fillData() {
-		// 	this.datacollection = {
-		// 		labels: [
-		// 			this.compareStock[0].stock.date,
-		// 			this.compareStock[1].stock.date,
-		// 		],
-		// 		datasets: [
-		// 			{
-		// 				label: 'Data One',
-		// 				backgroundColor: '#f87979',
-		// 				data: [
-		// 					this.compareStock[0].stock.stockCount *
-		// 						this.compareStock[0].stock.close,
-		// 					this.compareStock[0].stock.stockCount *
-		// 						this.compareStock[1].stock.close,
-		// 				],
-		// 			},
-		// 		],
-		// 	}
-		// },
+		fillChartData() {
+			this.datacollection = {
+				labels: [
+					this.compareStock[0].stock.date,
+					this.compareStock[1].stock.date,
+				],
+				datasets: [
+					{
+						label: 'Data One',
+						backgroundColor: '#f87979',
+						data: [this.stockData1, this.stockData2],
+					},
+				],
+			}
+		},
 	},
 
 	head: {
