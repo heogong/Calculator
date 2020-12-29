@@ -71,6 +71,10 @@
 				<!-- <google-ad /> -->
 			</b-field>
 
+			<b-filed>
+				<Chart :stock-data="investmentArray" :width="300" :height="300" />
+			</b-filed>
+
 			<section v-if="investmentArray.length > 0">
 				<div class="message is-warning">
 					<div class="message-body">
@@ -226,6 +230,7 @@
 
 <script>
 // import googleAd from '~/components/GoogleAd'
+import Chart from '@/components/Chart.vue'
 
 const APP_TITLE = '스마트 복리계산기'
 const APP_DESC = ''
@@ -272,6 +277,7 @@ const PERIOD_ARRAY = [
 export default {
 	components: {
 		// googleAd,
+		Chart,
 	},
 	data() {
 		return {
@@ -496,4 +502,11 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.small {
+	max-width: 600px;
+	margin: 10px auto;
+	/* display: block;
+	height: 399px; */
+}
+</style>
