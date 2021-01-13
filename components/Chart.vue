@@ -1,9 +1,9 @@
 <script>
-import { Line, mixins } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
 
 export default {
 	extends: Line,
-	mixins: [mixins.reactiveProp],
+	// mixins: [mixins.reactiveProp],
 
 	props: {
 		stockData: {
@@ -45,7 +45,6 @@ export default {
 		// 	await this.fillData()
 		// 	await await this.renderChart(this.datacollection, this.options)
 		// },
-
 		stockData: {
 			deep: true,
 			async handler() {

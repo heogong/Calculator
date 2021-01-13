@@ -67,13 +67,11 @@
 					>계산하기</b-button
 				>
 			</b-field>
-			<b-field>
-				<!-- <google-ad /> -->
-			</b-field>
+			<!-- <b-field>
+				<google-ad />
+			</b-field> -->
 
-			<b-filed>
-				<Chart :stock-data="investmentArray" :width="300" :height="300" />
-			</b-filed>
+			<Chart :stock-data="investmentArray" :width="300" :height="300" />
 
 			<section v-if="investmentArray.length > 0">
 				<div class="message is-warning">
@@ -143,7 +141,7 @@
 					<template scope="props">
 						<b-table-column field="id" label="기간" width="70" numeric>
 							{{
-								`${props.row.id + 1}  ${
+								`${props.row.id}  ${
 									selectPeriod == 1
 										? '개월'
 										: periodArray[selectPeriod].periodName
@@ -243,8 +241,8 @@ const APP_DESC = ''
  */
 const DEFAULT_INFO = {
 	id: 0,
-	investment: 0,
-	rate: 0,
+	investment: 10000000,
+	rate: 10,
 	returnInvestValue: 0,
 	regularly: 0,
 	totalMoney: 0,
@@ -253,21 +251,21 @@ const DEFAULT_INFO = {
 const PERIOD_ARRAY = [
 	{
 		periodName: '일',
-		periodValue: 1,
+		periodValue: 10,
 		rateValue: 0,
 		regularValue: 0,
 		disabled: false,
 	},
 	{
 		periodName: '월',
-		periodValue: '',
+		periodValue: 10,
 		rateValue: 0,
 		regularValue: 0,
 		disabled: true,
 	},
 	{
 		periodName: '년',
-		periodValue: '',
+		periodValue: 10,
 		rateValue: 0,
 		regularValue: 0,
 		disabled: true,
@@ -282,15 +280,15 @@ export default {
 	data() {
 		return {
 			labelPosition: 'on-border',
-			investment: 0,
-			rate: 0,
+			investment: DEFAULT_INFO.investment,
+			rate: DEFAULT_INFO.rate,
 			regularly: 0,
 			// investmentArray: [{ ...DEFAULT_INFO }],
 			investmentArray: [],
 			periodArray: PERIOD_ARRAY,
 			selectRatePeriod: 0, // 이자율 기간 선택
 			selectPeriod: 0, // 출력 일/월/연 기간
-			period: 1,
+			period: 10,
 		}
 	},
 
