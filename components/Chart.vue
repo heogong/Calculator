@@ -33,7 +33,7 @@ export default {
 
 	computed: {
 		duration() {
-			return this.stockData.map(v => `${++v.id}년`)
+			return this.stockData.map((v, index) => `${++index}년`)
 		},
 		totalMoney() {
 			return this.stockData.map(v => v.totalMoney)
@@ -50,12 +50,13 @@ export default {
 			async handler() {
 				await this.fillData()
 				await this.renderChart(this.datacollection, this.options)
+				// await this.testaa()
 			},
 		},
 	},
 
 	mounted() {
-		this.renderChart(this.datacollection, this.options)
+		// this.renderChart(this.datacollection, this.options)
 	},
 
 	methods: {
@@ -65,12 +66,16 @@ export default {
 				datasets: [
 					{
 						label: '금액',
-						backgroundColor: '#ffdd57',
-						fill: false,
+						backgroundColor: 'rgba(255, 206, 86, 0.2)',
+						fill: 'start',
 						data: this.totalMoney,
 					},
 				],
 			}
+		},
+
+		testaa() {
+			alert('ddddd')
 		},
 	},
 }

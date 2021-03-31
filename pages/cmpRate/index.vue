@@ -71,7 +71,12 @@
 				<google-ad />
 			</b-field> -->
 
-			<Chart :stock-data="investmentArray" :width="300" :height="300" />
+			<Chart
+				v-show="investmentArray.length > 0"
+				:stock-data="investmentArray"
+				:width="300"
+				:height="300"
+			/>
 
 			<section v-if="investmentArray.length > 0">
 				<div class="message is-warning">
@@ -485,13 +490,13 @@ export default {
 	},
 
 	head: {
-		title: '스마트 복리계산기 - 정기투자 / 이율 조절 스마트 복리계산기',
+		title: '복리계산기 - 정기투자 / 이율 조절 스마트 복리계산기',
 		meta: [
 			{ charset: 'utf-8' },
 			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
 			{
 				hid: '스마트 복리계산기',
-				name: '스마트 복리계산기',
+				name: '복리계산기,복리 계산기,스마트 복리계산기,계산기,수익률,이율',
 				content:
 					'정기금액 기능 및 일 / 월 / 연으로 표시 가능한 복리계산기 입니다.',
 			},
