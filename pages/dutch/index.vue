@@ -65,13 +65,6 @@
 							@blur="setBlurComma(index)"
 						></b-input>
 					</b-field>
-					<!-- <b-field label="더치금액" :label-position="labelPosition" expanded>
-          <b-input
-            v-model="memberArray[index].dutchPay"
-            controls-rounded
-            disabled
-          ></b-input>
-        </b-field> -->
 				</b-field>
 			</template>
 
@@ -102,9 +95,6 @@
 					</b-radio-button>
 				</b-field>
 			</b-field>
-			<!-- <div class="buttons">
-      <b-button type="is-dark" expanded @click="calTotalPay">계산하기</b-button>
-    </div> -->
 			<b-field label="총 금액" :label-position="labelPosition" expanded>
 				<b-input
 					disabled
@@ -112,15 +102,6 @@
 					size="is-medium"
 					custom-class="has-text-black"
 				/>
-				<!-- <p class="control">
-          <b-button
-            class="button"
-            size="is-medium"
-            type="is-warning"
-            @click="kakaoShare"
-            ><h6 class="subtitle is-7">카카오톡 공유하기</h6></b-button
-          >
-        </p> -->
 			</b-field>
 
 			<b-field
@@ -144,21 +125,10 @@
 				</template>
 			</b-field>
 		</section>
-
-		<!-- <section>
-      <kakao-link
-        ref="kakaolink2"
-        :member="memberArray"
-        :visit-count="visit"
-        :total="setComma(totalPayment)"
-      />
-    </section> -->
 	</section>
 </template>
 
 <script>
-// import kakaoLink from '~/components/KakaoLink'
-
 const APP_TITLE = '더치페이 계산기'
 const APP_DESC = '1차, 2차, n차... 개별 금액계산기'
 
@@ -168,9 +138,7 @@ const DEFAULT_MEMBER = {
 }
 
 export default {
-	components: {
-		// kakaoLink,
-	},
+	components: {},
 
 	data() {
 		return {
@@ -213,7 +181,6 @@ export default {
 		},
 
 		setMemberCount(count) {
-			// this.memberArray.fill(value)
 			this.memberArray.map((value, i) => {
 				value.member = count
 				this.setPayment(i)
