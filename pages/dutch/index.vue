@@ -124,7 +124,7 @@
 			</b-field>
 
 			<b-field
-				v-if="totalPayment > 0"
+				v-show="totalPayment > 0"
 				grouped
 				group-multiline
 				label="1인당 더치금액"
