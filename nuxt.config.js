@@ -27,7 +27,11 @@ export default {
 		title: '더치페이계산기 - N빵 각빵 계산기',
 		meta: [
 			{ charset: 'utf-8' },
-			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+			{
+				name: 'viewport, naver-site-verification',
+				content:
+					'width=device-width, initial-scale=1, c472b1dd3a03db222bdcfb288ba673a1df17f0f9',
+			},
 			{
 				hid: 'N차 더치페이계산기',
 				name:
