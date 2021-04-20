@@ -28,15 +28,18 @@ export default {
 		meta: [
 			{ charset: 'utf-8' },
 			{
-				name: 'viewport, naver-site-verification',
-				content:
-					'width=device-width, initial-scale=1, c472b1dd3a03db222bdcfb288ba673a1df17f0f9',
+				name: 'viewport',
+				content: 'width=device-width, initial-scale=1',
 			},
 			{
 				hid: 'N차 더치페이계산기',
 				name:
 					'N차 더치페이계산기,n빵,n빵계산기,n빵 계산기,더치페이,더치페이 계산기',
 				content: 'N차까지 각자 금액을 산출할 수 있는 더치페이 계산기 입니다.',
+			},
+			{
+				name: 'naver-site-verification',
+				content: 'c472b1dd3a03db222bdcfb288ba673a1df17f0f9',
 			},
 		],
 		script: [
