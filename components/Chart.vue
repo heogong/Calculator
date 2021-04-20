@@ -10,6 +10,12 @@ export default {
 			type: Array,
 			required: true,
 		},
+
+		period: {
+			type: String,
+			required: true,
+			default: '일',
+		},
 	},
 
 	data() {
@@ -33,7 +39,7 @@ export default {
 
 	computed: {
 		duration() {
-			return this.stockData.map((v, index) => `${++index}년`)
+			return this.stockData.map((v, index) => `${++index}${this.period}`)
 		},
 		totalMoney() {
 			return this.stockData.map(v => v.totalMoney)

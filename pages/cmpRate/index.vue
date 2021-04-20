@@ -67,49 +67,21 @@
 					>계산하기</b-button
 				>
 			</b-field>
-			<!-- <b-field>
-				<google-ad />
-			</b-field> -->
 
 			<Chart
 				v-show="investmentArray.length > 0"
 				:stock-data="investmentArray"
+				:period="periodArray[selectPeriod].periodName"
 				:width="300"
 				:height="300"
 			/>
 
 			<section v-if="investmentArray.length > 0">
-				<div class="message is-warning">
-					<div class="message-body">
-						<b-field grouped group-multiline>
-							<b-field label="총액" :label-position="labelPosition" expanded>
-								<b-input
-									v-model="totalAmount"
-									type="is-warning"
-									disabled
-									custom-class="has-text-black"
-								></b-input>
-							</b-field>
-							<b-field label="수익률" :label-position="labelPosition" expanded>
-								<b-input
-									v-model="totalPlusPer"
-									type="is-warning"
-									disabled
-									custom-class="has-text-black"
-								>
-								</b-input>
-							</b-field>
-							<b-field label="수익금" :label-position="labelPosition" expanded>
-								<b-input
-									v-model="totalRevenue"
-									type="is-warning"
-									disabled
-									custom-class="has-text-black"
-								></b-input>
-							</b-field>
-						</b-field>
-					</div>
-				</div>
+				<total-summary
+					:total-amount-data="totalAmount"
+					:total-plus-per-data="totalPlusPer"
+					:total-revenue-data="totalRevenue"
+				/>
 
 				<b-field label="출력" :label-position="labelPosition">
 					<template v-for="(period, index) in periodArray">
@@ -137,103 +109,21 @@
 					</div>
 				</b-field>
 
-				<b-table
-					:data="investmentArray"
-					:narrowed="true"
-					:paginated="true"
-					per-page="24"
-				>
-					<template scope="props">
-						<b-table-column field="id" label="기간" width="70" numeric>
-							{{
-								`${props.row.id}  ${
-									selectPeriod == 1
-										? '개월'
-										: periodArray[selectPeriod].periodName
-								}`
-							}}
-						</b-table-column>
-
-						<b-table-column field="returnInvestValue" label="수익금" centered>
-							{{ props.row.returnInvestValue | numeral('0,0') }}
-						</b-table-column>
-
-						<b-table-column field="totalMoney" label="총 액" centered>
-							{{ props.row.totalMoney | numeral('0,0') }}
-							<!-- {{ props.row.totalMoney }} -->
-						</b-table-column>
-
-						<b-table-column label="수익률" centered>
-							<span
-								:class="[
-									'tag',
-									{
-										'is-info':
-											(props.row.totalMoney - Number(props.row.investment)) /
-												Number(props.row.investment) <
-											0,
-									},
-									{
-										'is-danger':
-											(props.row.totalMoney - Number(props.row.investment)) /
-												Number(props.row.investment) >=
-											0,
-									},
-								]"
-							>
-								{{
-									Math.round(
-										((props.row.totalMoney - Number(props.row.investment)) /
-											Number(props.row.investment)) *
-											100,
-									)
-								}}%
-							</span>
-						</b-table-column>
-
-						<b-table-column field="rate" label="이율(%)" width="200">
-							<b-numberinput
-								v-model="props.row.rate"
-								controls-position="compact"
-								type="is-warning"
-								controls-rounded
-								:use-html5-validation="false"
-								size="is-small"
-								@input="setReCal(props.row.id)"
-							></b-numberinput>
-						</b-table-column>
-
-						<b-table-column field="regularly" label="정기투자금" width="200">
-							<b-field>
-								<b-input
-									v-model="props.row.regularly"
-									controls-position="compact"
-									type="is-warning"
-									controls-rounded
-									size="is-small"
-									@input="setReCal(props.row.id)"
-								></b-input>
-								<p class="control">
-									<b-button
-										type="is-warning"
-										class="button"
-										size="is-small"
-										@click="setRegular(props.row.id)"
-										>하위적용</b-button
-									>
-								</p>
-							</b-field>
-						</b-table-column>
-					</template>
-				</b-table>
+				<data-table
+					:investment-data="investmentArray"
+					:select-period="selectPeriod"
+					:period-data="periodArray"
+					@parentReCalFn="setReCal"
+				/>
 			</section>
 		</section>
 	</section>
 </template>
 
 <script>
-// import googleAd from '~/components/GoogleAd'
 import Chart from '@/components/Chart.vue'
+import DataTable from './dataTable.vue'
+import TotalSummary from './totalSummary.vue'
 
 const APP_TITLE = '스마트 복리계산기'
 const APP_DESC = ''
@@ -246,6 +136,7 @@ const APP_DESC = ''
  */
 const DEFAULT_INFO = {
 	id: 0,
+	periodNo: 0, // 기간표시 값
 	investment: 10000000,
 	rate: 10,
 	returnInvestValue: 0,
@@ -279,8 +170,9 @@ const PERIOD_ARRAY = [
 
 export default {
 	components: {
-		// googleAd,
 		Chart,
+		DataTable,
+		TotalSummary,
 	},
 	data() {
 		return {
@@ -378,34 +270,13 @@ export default {
 				this.periodArray[2].rateValue = this.rate
 				this.periodArray[1].rateValue = this.rate / 12
 				this.periodArray[0].rateValue = this.rate / 365
-
-				// this.periodArray[2].regularValue = parseInt(this.regularly)
-				// this.periodArray[1].regularValue = parseInt(this.regularly / 12)
-				// this.periodArray[0].regularValue = parseInt(this.regularly / 365)
 			} else if (this.selectRatePeriod === 1) {
 				this.periodArray[1].rateValue = this.rate
 				this.periodArray[0].rateValue = this.rate / 30
-
-				// this.periodArray[1].regularValue = parseInt(this.regularly)
-				// this.periodArray[0].regularValue = parseInt(this.regularly / 30)
 			} else {
 				this.periodArray[0].rateValue = this.rate
-
-				// this.periodArray[0].regularValue = parseInt(this.regularly)
 			}
 		},
-
-		// checkData(index) {
-		//   const aa = this.investmentArray.some((v) => Number(v.regularly) > 0)
-		//   if (aa) {
-		//     this.$buefy.dialog.confirm({
-		//       message: '정기투자금이 초기화 됩니다 변경 하시겠습니까?',
-		//       onConfirm: () => this.calculation(),
-		//     })
-		//   } else {
-		//     this.calculation()
-		//   }
-		// },
 
 		calculation() {
 			// 초기화
@@ -418,6 +289,7 @@ export default {
 				this.investmentArray.push({
 					...DEFAULT_INFO,
 					id: index,
+					periodNo: index + 1,
 					investment: this.investment,
 					regularly: this.regularly,
 				})
@@ -433,8 +305,6 @@ export default {
 
 				// 이자
 				investmentData.rate = parseFloat(period.rateValue.toFixed(3))
-				// investmentData.regularly = period.regularValue
-				// investmentData.rate = period.rateValue
 				investmentData.regularly =
 					index === 0 ? 0 : Number(investmentData.regularly)
 
@@ -472,15 +342,15 @@ export default {
 		},
 
 		// 정기투자금 선택row부터 하위일괄적용
-		setRegular(selInx) {
-			for (let i = selInx; i < this.investmentArray.length; i++) {
-				this.investmentArray[i].regularly = this.investmentArray[
-					selInx
-				].regularly
-			}
+		// setRegular(selInx) {
+		// 	for (let i = selInx; i < this.investmentArray.length; i++) {
+		// 		this.investmentArray[i].regularly = this.investmentArray[
+		// 			selInx
+		// 		].regularly
+		// 	}
 
-			this.setReCal(selInx)
-		},
+		// 	this.setReCal(selInx)
+		// },
 
 		delZero() {
 			if (parseInt(this.investment) === 0) {
