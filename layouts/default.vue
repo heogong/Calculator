@@ -3,6 +3,7 @@
 		<header-form></header-form>
 		<kakao-ad></kakao-ad>
 		<nuxt class="body" />
+		<coupang-part></coupang-part>
 		<footer-form></footer-form>
 	</div>
 </template>
@@ -11,12 +12,14 @@
 import HeaderForm from '@/components/HeaderForm'
 import FooterForm from '@/components/FooterForm'
 import kakaoAd from '@/components/KakaoAd'
+import coupangPart from '@/components/CoupangPartners'
 
 export default {
 	components: {
 		HeaderForm,
 		FooterForm,
 		kakaoAd,
+		coupangPart,
 	},
 	mounted() {
 		// window.Kakao.init('process.env.KAKAO_INIT_KEY')
