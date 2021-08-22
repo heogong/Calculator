@@ -6,14 +6,14 @@
 					<div class="card-image">
 						<figure class="image is-2by1">
 							<img
-								src="https://bulma.io/images/placeholders/1280x960.png"
+								:src="require(`~/assets/images/whatEat/${eat.image}.jpg`)"
 								alt="Placeholder image"
 							/>
 						</figure>
 					</div>
 					<div class="card-content">
 						<div class="content">
-							{{ eat }}
+							{{ eat.name }}
 						</div>
 					</div>
 				</div>
@@ -27,17 +27,50 @@ export default {
 	data() {
 		return {
 			eatList: [
-				'피자',
-				'치킨',
-				'짜장면',
-				'김밥',
-				'돈까스',
-				'순대국',
-				'라면',
-				'김치찌개',
-				'된장찌개',
-				'비빔밥',
-				'간장게장',
+				{
+					name: '피자',
+					image: 'pizza',
+				},
+				{
+					name: '치킨',
+					image: 'chinese',
+				},
+				{
+					name: '짜장면',
+					image: 'chinese',
+				},
+				{
+					name: '김밥',
+					image: 'kimbab',
+				},
+				{
+					name: '돈까스',
+					image: 'restaurant',
+				},
+				{
+					name: '순대국',
+					image: 'for-money',
+				},
+				{
+					name: '라면',
+					image: 'if-the',
+				},
+				{
+					name: '김치찌개',
+					image: 'chinese',
+				},
+				{
+					name: '된장찌개',
+					image: 'chinese',
+				},
+				{
+					name: '비빔밥',
+					image: 'chinese',
+				},
+				{
+					name: '간장게장',
+					image: 'chinese',
+				},
 			],
 			vsList: [],
 		}
