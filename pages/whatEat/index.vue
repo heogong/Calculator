@@ -5,8 +5,8 @@
 		></b-field>
 		<b-field grouped>
 			<template v-for="eat in vsList">
-				<div :key="eat" class="column is-half" @click="nextEat(eat)">
-					<div class="card">
+				<div :key="eat" class="column is-half">
+					<div class="card" @click="nextEat(eat)">
 						<div class="card-header-title news_text">{{ eat.name }}</div>
 						<div class="card-image">
 							<figure class="image is-2by1">
@@ -17,15 +17,17 @@
 							</figure>
 						</div>
 					</div>
-					<b-button
-						type="is-primary"
-						tag="a"
-						:href="eat.link"
-						target="_blank"
-						outlined
-						expanded
-						>구매하기</b-button
-					>
+					<div>
+						<b-button
+							type="is-primary"
+							tag="a"
+							:href="eat.link"
+							target="_blank"
+							outlined
+							expanded
+							>구매하기</b-button
+						>
+					</div>
 				</div>
 			</template>
 		</b-field>
