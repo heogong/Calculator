@@ -54,6 +54,7 @@ export default {
 	 ** Global CSS
 	 */
 	css: ['~/assets/styles/main.css'],
+	// css: ['@/assets/bulma/css/bulma.min.css'],
 	/*
 	 ** Plugins to load before mounting the App
 	 ** https://nuxtjs.org/guide/plugins
@@ -76,7 +77,7 @@ export default {
 	 */
 	modules: [
 		// Doc: https://buefy.github.io/#/documentation
-		'nuxt-buefy',
+		['nuxt-buefy', { css: true }],
 		'@nuxtjs/redirect-module',
 		[
 			'@nuxtjs/google-adsense',

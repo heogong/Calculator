@@ -4,8 +4,9 @@
 			><b-progress type="is-success" :value="10" show-value></b-progress
 		></b-field>
 		<b-field grouped>
-			<template v-for="eat in vsList">
-				<div :key="eat" class="column is-half">
+			<!-- https://v3.ko.vuejs.org/guide/transitions-list.html -->
+			<transition-group name="fade" tag="div">
+				<div v-for="eat in vsList" :key="eat" class="column">
 					<div class="card" @click="nextEat(eat)">
 						<div class="card-header-title news_text">{{ eat.name }}</div>
 						<div class="card-image">
@@ -17,19 +18,19 @@
 							</figure>
 						</div>
 					</div>
-					<div>
+
+					<div class="pt-1">
 						<b-button
-							type="is-primary"
+							type="is-link"
 							tag="a"
 							:href="eat.link"
 							target="_blank"
-							outlined
 							expanded
 							>구매하기</b-button
 						>
 					</div>
 				</div>
-			</template>
+			</transition-group>
 		</b-field>
 	</section>
 </template>
@@ -40,78 +41,24 @@ import axios from 'axios'
 export default {
 	data() {
 		return {
-			eatList2: [],
-			eatList: [
-				{
-					name: '피자',
-					image: 'pizza',
-					link: 'https://coupa.ng/b5NKxR',
-				},
-				{
-					name: '치킨',
-					image: 'chinese',
-					link: 'https://coupa.ng/b5NKzQ',
-				},
-				{
-					name: '짜장면',
-					image: 'chinese',
-					link: 'https://coupa.ng/b5NKBJ',
-				},
-				{
-					name: '김밥',
-					image: 'kimbab',
-					link: 'https://coupa.ng/b5NKD9',
-				},
-				{
-					name: '돈까스',
-					image: 'restaurant',
-					link: 'https://coupa.ng/b5NKtx',
-				},
-				{
-					name: '순대국',
-					image: 'for-money',
-					link: 'https://coupa.ng/b5NKr4',
-				},
-				{
-					name: '라면',
-					image: 'if-the',
-					link: 'https://coupa.ng/b5NIqF',
-				},
-				{
-					name: '김치찌개',
-					image: 'chinese',
-					link: 'https://coupa.ng/b5NJLT',
-				},
-				{
-					name: '된장찌개',
-					image: 'chinese',
-					link: 'https://coupa.ng/b5NJXv',
-				},
-				{
-					name: '비빔밥',
-					image: 'chinese',
-					link: 'https://coupa.ng/b5NJZx',
-				},
-				{
-					name: '간장게장',
-					image: 'chinese',
-					link: 'https://coupa.ng/b5NKpI',
-				},
-			],
+			eatList: [],
 			vsList: [],
+			show: true,
 		}
 	},
 
-	beforeCreate() {
-		axios.get('/eatData.json').then(response => (this.eatList2 = response.data))
-	},
-
-	created() {
+	async created() {
 		this.$store.commit('setAppTitle', '오늘 뭐 먹지?')
-		this.initVsList()
+		await this.setData()
+		await this.initVsList()
 	},
 
 	methods: {
+		async setData() {
+			const response = await axios.get('/eatData.json')
+			this.eatList = response.data
+		},
+
 		initVsList() {
 			const firstRanVal = this.makeRandomValue()
 			this.vsList.push(this.eatList[firstRanVal])
@@ -136,7 +83,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+@import url('@/assets/bulma/css/bulma.min');
 .news_text {
 	background: #ffffff;
 	opacity: 1;
@@ -145,5 +93,14 @@ export default {
 .news_text:hover {
 	background: #e1ff36;
 	opacity: 1;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: all 1s ease;
+}
+.fade-enter-from, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+	opacity: 0;
+	transform: translateY(30px);
 }
 </style>
