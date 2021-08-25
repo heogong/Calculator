@@ -1,9 +1,9 @@
 <template>
 	<div class="center">
 		<iframe
-			src="https://ads-partners.coupang.com/widgets.html?id=504591&template=carousel&trackingCode=AF6783549&subId=&width=680&height=140"
+			src="https://ads-partners.coupang.com/widgets.html?id=504591&template=carousel&trackingCode=AF6783549&subId=&width=680&height=70"
 			width="680"
-			height="140"
+			height="70"
 			frameborder="0"
 			scrolling="no"
 			referrerpolicy="unsafe-url"

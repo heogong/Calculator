@@ -1,50 +1,66 @@
 <template>
-	<section class="section">
-		<b-field
-			><b-progress type="is-success" :value="10" show-value></b-progress
-		></b-field>
-		<b-field grouped>
-			<!-- https://v3.ko.vuejs.org/guide/transitions-list.html -->
-			<transition-group name="fade" tag="div">
-				<div v-for="eat in vsList" :key="eat" class="column">
-					<div class="card" @click="nextEat(eat)">
-						<div class="card-header-title news_text">{{ eat.name }}</div>
-						<div class="card-image">
-							<figure class="image is-2by1">
-								<img
-									:src="require(`~/assets/images/whatEat/${eat.image}.jpg`)"
-									alt="Placeholder image"
-								/>
-							</figure>
-						</div>
-					</div>
-
-					<div class="pt-1">
-						<b-button
-							type="is-link"
-							tag="a"
-							:href="eat.link"
-							target="_blank"
-							expanded
-							>구매하기</b-button
-						>
-					</div>
-				</div>
-			</transition-group>
-		</b-field>
+	<section>
+		<b-field class="column"
+			><b-progress type="is-warning" :value="processing" show-value>{{
+				`${processCount} / ${totalProcess}`
+			}}</b-progress></b-field
+		>
+		<!-- https://v3.ko.vuejs.org/guide/transitions-list.html -->
+		<transition-group name="fade" tag="b-field" grouped>
+			<template v-if="!selectedEatObj.length > 0">
+				<template v-for="eat in vsList">
+					<eat-content
+						:key="eat"
+						class="column"
+						:eat-data="eat"
+						@parentNextEatFn="nextEat"
+					/>
+				</template>
+			</template>
+			<template v-else>
+				<template v-for="selectEat in selectedEatObj">
+					<eat-content
+						:key="selectEat"
+						:eat-data="selectEat"
+						@parentNextEatFn="nextEat"
+					/>
+				</template>
+			</template>
+		</transition-group>
 	</section>
 </template>
 
 <script>
 import axios from 'axios'
+import EatContent from './eatContent.vue'
 
 export default {
+	components: {
+		EatContent,
+	},
+
 	data() {
 		return {
 			eatList: [],
 			vsList: [],
-			show: true,
+			totalProcess: 0,
+			isSelect: false,
+			selectedEatObj: [],
 		}
+	},
+
+	computed: {
+		processCount() {
+			return this.totalProcess - this.eatList.length
+		},
+		processing() {
+			return parseInt(
+				((this.totalProcess - this.eatList.length) / this.totalProcess) * 100,
+			)
+		},
+		makeRandomValue() {
+			return Math.floor(Math.random() * this.eatList.length)
+		},
 	},
 
 	async created() {
@@ -60,24 +76,28 @@ export default {
 		},
 
 		initVsList() {
-			const firstRanVal = this.makeRandomValue()
+			this.totalProcess = this.eatList.length
+
+			const firstRanVal = this.makeRandomValue
 			this.vsList.push(this.eatList[firstRanVal])
 			this.eatList.splice(firstRanVal, 1)
 
-			const secondRanVal = this.makeRandomValue()
+			const secondRanVal = this.makeRandomValue
 			this.vsList.push(this.eatList[secondRanVal])
 			this.eatList.splice(secondRanVal, 1)
 		},
-		makeRandomValue() {
-			return Math.floor(Math.random() * this.eatList.length)
-		},
 
 		nextEat(selectedEat) {
-			this.vsList = [selectedEat]
+			if (this.eatList.length > 0) {
+				this.vsList = [selectedEat]
 
-			const ranVal = this.makeRandomValue()
-			this.vsList.push(this.eatList[ranVal])
-			this.eatList.splice(ranVal, 1)
+				const ranVal = this.makeRandomValue
+				this.vsList.push(this.eatList[ranVal])
+				this.eatList.splice(ranVal, 1)
+			} else {
+				this.selectedEatObj.push(selectedEat)
+				this.isSelect = true
+			}
 		},
 	},
 }
@@ -85,6 +105,7 @@ export default {
 
 <style scoped>
 @import url('@/assets/bulma/css/bulma.min');
+
 .news_text {
 	background: #ffffff;
 	opacity: 1;

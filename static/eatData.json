@@ -53,5 +53,17 @@
         "name": "간장게장",
         "image": "chinese",
         "link": "https://coupa.ng/b5NKpI"
+    },
+    {
+        "name": "캠핑가서 바베큐파티",
+        "image": "camping_bbq",
+        "link": "https://coupa.ng/b5NKpI"
+
+    },
+    {
+        "name": "스테이크",
+        "image": "stake",
+        "link": "https://coupa.ng/b5NKpI"
+
     }
 ]
