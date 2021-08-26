@@ -21,8 +21,11 @@
 				<template v-for="selectEat in selectedEatObj">
 					<eat-content
 						:key="selectEat"
+						class="column"
 						:eat-data="selectEat"
+						:is-selected="selectedEatObj.length > 0"
 						@parentNextEatFn="nextEat"
+						@parentResetEat="resetEat"
 					/>
 				</template>
 			</template>
@@ -35,6 +38,7 @@ import axios from 'axios'
 import EatContent from './eatContent.vue'
 
 export default {
+	layout: 'customEat',
 	components: {
 		EatContent,
 	},
@@ -99,22 +103,19 @@ export default {
 				this.isSelect = true
 			}
 		},
+
+		async resetEat() {
+			this.selectedEatObj = []
+			this.vsList = []
+			await this.setData()
+			await this.initVsList()
+		},
 	},
 }
 </script>
 
 <style scoped>
 @import url('@/assets/bulma/css/bulma.min');
-
-.news_text {
-	background: #ffffff;
-	opacity: 1;
-}
-
-.news_text:hover {
-	background: #e1ff36;
-	opacity: 1;
-}
 
 .fade-enter-active,
 .fade-leave-active {

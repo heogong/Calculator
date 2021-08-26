@@ -33,11 +33,11 @@
 							>스마트복리계산기</nuxt-link
 						>
 						<nuxt-link
-							to="/ifstock"
+							to="/whatEat"
 							class="navbar-item"
-							:class="{ 'is-active': routePath === '/ifstock' }"
+							:class="{ 'is-active': routePath === '/whatEat' }"
 							@click.native="hambugerActive = false"
-							>주식정보</nuxt-link
+							>오늘뭐먹지?</nuxt-link
 						>
 					</div>
 				</div>

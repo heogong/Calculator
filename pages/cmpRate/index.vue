@@ -1,18 +1,5 @@
 <template>
 	<section>
-		<b-button
-			label="Launch alert (default)"
-			type="is-primary"
-			size="is-medium"
-			@click="isImageModalActive = true"
-		/>
-
-		<b-modal v-model="isImageModalActive">
-			<p class="image is-4by3">
-				<img src="/static/img/placeholder-1280x960.png" />
-			</p>
-		</b-modal>
-
 		<section class="section">
 			<b-field label="투자원금" :label-position="labelPosition">
 				<b-input
@@ -199,7 +186,6 @@ export default {
 			selectRatePeriod: 0, // 이자율 기간 선택
 			selectPeriod: 0, // 출력 일/월/연 기간
 			period: 10,
-			isImageModalActive: false,
 		}
 	},
 
