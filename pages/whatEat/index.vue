@@ -50,7 +50,8 @@ export default {
 			totalProcess: 0,
 			isSelect: false,
 			selectedEatObj: [],
-			historyData: [],
+			fireStoreHistoryData: [],
+			fireStoreSelectData: [],
 		}
 	},
 
@@ -100,33 +101,48 @@ export default {
 			this.vsList.push(this.eatList[secondRanVal])
 			this.eatList.splice(secondRanVal, 1)
 
-			this.historyData.push(this.vsList)
+			this.setHistoryData()
 		},
 
-		nextEat(selectedEat) {
+		async nextEat(selectedEat) {
 			if (this.eatList.length > 0) {
 				this.vsList = [selectedEat]
+				this.fireStoreSelectData.push(selectedEat)
+
 				const ranVal = this.makeRandomValue
 				this.vsList.push(this.eatList[ranVal])
 				this.eatList.splice(ranVal, 1)
 
-				this.historyData.push(this.vsList)
+				this.setHistoryData()
 			} else {
 				this.selectedEatObj.push(selectedEat)
+				this.fireStoreSelectData.push(selectedEat)
 				this.isSelect = true
 
-				const eats = this.$fire.firestore.collection('eats').doc('123')
+				const eats = this.$fire.firestore.collection('eats')
 				const docData = {
-					historyData: this.historyData,
+					historyData: this.fireStoreHistoryData,
+					selectData: this.fireStoreSelectData,
 				}
 
-				eats.set(docData)
+				const result = await eats.add(docData)
+				alert(result.id)
 			}
+		},
+
+		// firestore VS 리스트 데이터
+		setHistoryData() {
+			this.fireStoreHistoryData.push({
+				first: this.vsList[0],
+				second: this.vsList[1],
+			})
 		},
 
 		async resetEat() {
 			this.selectedEatObj = []
 			this.vsList = []
+			this.fireStoreHistoryData = []
+			this.fireStoreSelectData = []
 			await this.setData()
 			await this.initVsList()
 		},
