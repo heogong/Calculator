@@ -119,10 +119,11 @@ export default {
 				this.fireStoreSelectData.push(selectedEat)
 				this.isSelect = true
 
-				const eats = this.$fire.firestore.collection('eats')
+				const eats = this.$fire.firestore.collection('selectEat')
 				const docData = {
 					historyData: this.fireStoreHistoryData,
 					selectData: this.fireStoreSelectData,
+					date: new Date(),
 				}
 
 				const result = await eats.add(docData)
