@@ -85,6 +85,24 @@ export default {
 				id: 'ca-pub-6427355931978753',
 			},
 		],
+		[
+			'@nuxtjs/firebase',
+			{
+				config: {
+					apiKey: 'AIzaSyCbTooDoKHB5y8dc9w9h9CUZFG6DY5u3N8',
+					authDomain: 'calproject-6fe1c.firebaseapp.com',
+					projectId: 'calproject-6fe1c',
+					storageBucket: 'calproject-6fe1c.appspot.com',
+					messagingSenderId: '136456100913',
+					appId: '1:136456100913:web:c87ae6029d185b38288910',
+					measurementId: 'G-HYV62BSE8S',
+				},
+				services: {
+					auth: true, // Just as example. Can be any other service.
+					firestore: true,
+				},
+			},
+		],
 	],
 	redirect: [{ from: '^/rate(.*)$', to: '/cmpRate' }],
 

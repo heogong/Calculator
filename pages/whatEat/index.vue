@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import EatContent from './eatContent.vue'
 
 export default {
@@ -50,6 +50,7 @@ export default {
 			totalProcess: 0,
 			isSelect: false,
 			selectedEatObj: [],
+			historyData: [],
 		}
 	},
 
@@ -74,9 +75,18 @@ export default {
 	},
 
 	methods: {
+		// async setData() {
+		// 	const response = await axios.get('/eatData.json')
+		// 	this.eatList = response.data
+		// },
+
 		async setData() {
-			const response = await axios.get('/eatData.json')
-			this.eatList = response.data
+			const whatEatData = this.$fire.firestore
+				.collection('whatEat')
+				.doc('eatData')
+
+			const snapshot = await whatEatData.get()
+			this.eatList = snapshot.data().data
 		},
 
 		initVsList() {
@@ -89,18 +99,28 @@ export default {
 			const secondRanVal = this.makeRandomValue
 			this.vsList.push(this.eatList[secondRanVal])
 			this.eatList.splice(secondRanVal, 1)
+
+			this.historyData.push(this.vsList)
 		},
 
 		nextEat(selectedEat) {
 			if (this.eatList.length > 0) {
 				this.vsList = [selectedEat]
-
 				const ranVal = this.makeRandomValue
 				this.vsList.push(this.eatList[ranVal])
 				this.eatList.splice(ranVal, 1)
+
+				this.historyData.push(this.vsList)
 			} else {
 				this.selectedEatObj.push(selectedEat)
 				this.isSelect = true
+
+				const eats = this.$fire.firestore.collection('eats').doc('123')
+				const docData = {
+					historyData: this.historyData,
+				}
+
+				eats.set(docData)
 			}
 		},
 
