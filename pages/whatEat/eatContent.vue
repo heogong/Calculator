@@ -1,9 +1,10 @@
 <template>
 	<div>
 		<div class="card" @click="nextEat(eatData)">
-			<div class="card-header-title has-text-justified">{{ eatData.name }}</div>
+			<!-- <div class="card-header-title has-text-centered">{{ eatData.name }}</div> -->
+			<!-- <div class="cardTitle has-text-centered">{{ eatData.name }}</div> -->
 			<div class="card-image">
-				<figure class="image is-2by1">
+				<figure class="image is-1by1">
 					<img
 						:src="require(`~/assets/images/whatEat/${eatData.image}.jpg`)"
 						alt="Placeholder image"
@@ -31,6 +32,16 @@
 					@click="resetEat"
 					>공유하기</b-button
 				>
+				<b-button
+					tag="nuxt-link"
+					:to="{
+						path: '/whatEat/eatHistory',
+						query: { historyId: firestoreId },
+					}"
+					size="is-small"
+					expanded
+					>내역보기</b-button
+				>
 			</div>
 			<b-button
 				v-else
@@ -41,7 +52,11 @@
 				size="is-small"
 				expanded
 				outlined
-				>구매하기</b-button
+			>
+				<span class="coupangStyle1">cou</span
+				><span class="coupangStyle2">p</span><span class="coupangStyle3">a</span
+				><span class="coupangStyle4">n</span
+				><span class="coupangStyle5">g</span> 구매하기</b-button
 			>
 		</div>
 	</div>
@@ -57,6 +72,11 @@ export default {
 		// 최종선택 값
 		isSelected: {
 			type: Boolean,
+		},
+		//
+		firestoreId: {
+			type: String,
+			required: true,
 		},
 	},
 
@@ -95,5 +115,35 @@ img {
 	box-shadow: 1px 1px 0 rgb(0, 0, 0, 0.5);
 	position: relative;
 	top: 2px;
+}
+
+.cardTitle {
+	padding: 0.75rem;
+	font-weight: bold;
+}
+
+.coupangStyle1 {
+	color: brown;
+	font-weight: bold;
+}
+
+.coupangStyle2 {
+	color: rgb(255, 0, 0);
+	font-weight: bold;
+}
+
+.coupangStyle3 {
+	color: gold;
+	font-weight: bold;
+}
+
+.coupangStyle4 {
+	color: green;
+	font-weight: bold;
+}
+
+.coupangStyle5 {
+	color: darkturquoise;
+	font-weight: bold;
 }
 </style>

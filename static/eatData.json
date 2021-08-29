@@ -2,68 +2,82 @@
     {
         "name": "피자",
         "image": "pizza",
-        "link": "https://coupa.ng/b5NKxR"
+        "link": "https://coupa.ng/b5NKxR",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
     },
     {
         "name": "치킨",
         "image": "chinese",
-        "link": "https://coupa.ng/b5NKzQ"
+        "link": "https://coupa.ng/b5NKzQ",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
     },
     {
         "name": "짜장면",
         "image": "chinese",
-        "link": "https://coupa.ng/b5NKBJ"
+        "link": "https://coupa.ng/b5NKBJ",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
+
     },
     {
         "name": "김밥",
         "image": "kimbab",
-        "link": "https://coupa.ng/b5NKD9"
+        "link": "https://coupa.ng/b5NKD9",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
     },
     {
         "name": "돈까스",
         "image": "restaurant",
-        "link": "https://coupa.ng/b5NKtx"
+        "link": "https://coupa.ng/b5NKtx",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
     },
     {
         "name": "순대국",
         "image": "for-money",
-        "link": "https://coupa.ng/b5NKr4"
+        "link": "https://coupa.ng/b5NKr4",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
     },
     {
         "name": "라면",
         "image": "if-the",
-        "link": "https://coupa.ng/b5NIqF"
+        "link": "https://coupa.ng/b5NIqF",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
     },
     {
         "name": "김치찌개",
         "image": "chinese",
-        "link": "https://coupa.ng/b5NJLT"
+        "link": "https://coupa.ng/b5NJLT",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
     },
     {
         "name": "된장찌개",
         "image": "chinese",
-        "link": "https://coupa.ng/b5NJXv"
+        "link": "https://coupa.ng/b5NJXv","iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
+
     },
     {
         "name": "비빔밥",
         "image": "chinese",
-        "link": "https://coupa.ng/b5NJZx"
+        "link": "https://coupa.ng/b5NJZx",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
     },
     {
         "name": "간장게장",
         "image": "chinese",
-        "link": "https://coupa.ng/b5NKpI"
+        "link": "https://coupa.ng/b5NKpI",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
     },
     {
         "name": "바베큐파티",
         "image": "camping_bbq",
-        "link": "https://coupa.ng/b5NKpI"
+        "link": "https://coupa.ng/b5NKpI",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
 
     },
     {
         "name": "스테이크",
         "image": "stake",
-        "link": "https://coupa.ng/b5NKpI"
+        "link": "https://coupa.ng/b5NKpI",
+        "iframeLink" : "<iframe src='https://coupa.ng/b56o3i' width='120' height='240' frameborder='0' scrolling='no' referrerpolicy='unsafe-url'></iframe>"
 
     }
 ]

@@ -64,7 +64,7 @@
 				</b-field>
 			</b-field>
 		</div> -->
-		<b-field>
+		<b-field class="has-text-centered">
 			<b-steps
 				v-model="activeStep"
 				:animated="isAnimated"
@@ -76,10 +76,11 @@
 				:mobile-mode="mobileMode"
 				size="is-small"
 			>
+				<!-- <div>{{ $route.query }}</div> -->
 				<template v-for="(historyEat, index) in historyEatData">
 					<b-step-item
 						:key="index"
-						:step="index"
+						:step="`${index + 1}`"
 						:label="`${historyEat.first.name} VS ${historyEat.second.name}`"
 						:clickable="isStepsClickable"
 					>
@@ -130,6 +131,14 @@
 					>
 						Next
 					</b-button>
+					<b-button
+						outlined
+						icon-pack="fas"
+						icon-right="forward"
+						@click.prevent="activeStep = selectEatData.length - 1"
+					>
+						최종pick
+					</b-button>
 				</template>
 			</b-steps>
 		</b-field>
@@ -162,6 +171,12 @@ export default {
 		}
 	},
 
+	computed: {
+		historyId() {
+			return this.$route.query.historyId
+		},
+	},
+
 	created() {
 		this.initData()
 	},
@@ -170,7 +185,8 @@ export default {
 		async initData() {
 			const eats = this.$fire.firestore
 				.collection('selectEat')
-				.doc('Xhazrc2rzEW1p1Gi0E8s')
+				.doc(this.historyId)
+			// .doc('Xhazrc2rzEW1p1Gi0E8s')
 
 			const snapshot = await eats.get()
 			this.historyEatData = snapshot.data().historyData

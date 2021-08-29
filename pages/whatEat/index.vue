@@ -5,7 +5,17 @@
 				`${processCount} / ${totalProcess}`
 			}}</b-progress></b-field
 		>
-		<!-- https://v3.ko.vuejs.org/guide/transitions-list.html -->
+
+		<b-field class="column">
+			<h3 v-if="vsList.length > 0" class="title is-3 has-text-centered">
+				{{
+					selectedEatObj.length > 0
+						? `오늘은! ${selectedEatObj[0].name}`
+						: `${vsList[0].name} vs ${vsList[1].name}`
+				}}
+			</h3>
+		</b-field>
+
 		<transition-group name="fade" tag="b-field" grouped>
 			<template v-if="!selectedEatObj.length > 0">
 				<template v-for="eat in vsList">
@@ -24,6 +34,7 @@
 						class="column"
 						:eat-data="selectEat"
 						:is-selected="selectedEatObj.length > 0"
+						:firestore-id="fireStoreId"
 						@parentNextEatFn="nextEat"
 						@parentResetEat="resetEat"
 					/>
@@ -34,7 +45,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 import EatContent from './eatContent.vue'
 
 export default {
@@ -52,6 +63,7 @@ export default {
 			selectedEatObj: [],
 			fireStoreHistoryData: [],
 			fireStoreSelectData: [],
+			fireStoreId: '',
 		}
 	},
 
@@ -76,19 +88,19 @@ export default {
 	},
 
 	methods: {
-		// async setData() {
-		// 	const response = await axios.get('/eatData.json')
-		// 	this.eatList = response.data
-		// },
-
 		async setData() {
-			const whatEatData = this.$fire.firestore
-				.collection('whatEat')
-				.doc('eatData')
-
-			const snapshot = await whatEatData.get()
-			this.eatList = snapshot.data().data
+			const response = await axios.get('/eatData.json')
+			this.eatList = response.data
 		},
+
+		// async setData() {
+		// 	const whatEatData = this.$fire.firestore
+		// 		.collection('whatEat')
+		// 		.doc('eatData')
+
+		// 	const snapshot = await whatEatData.get()
+		// 	this.eatList = snapshot.data().data
+		// },
 
 		initVsList() {
 			this.totalProcess = this.eatList.length
@@ -104,7 +116,7 @@ export default {
 			this.setHistoryData()
 		},
 
-		async nextEat(selectedEat) {
+		nextEat(selectedEat) {
 			if (this.eatList.length > 0) {
 				this.vsList = [selectedEat]
 				this.fireStoreSelectData.push(selectedEat)
@@ -119,15 +131,8 @@ export default {
 				this.fireStoreSelectData.push(selectedEat)
 				this.isSelect = true
 
-				const eats = this.$fire.firestore.collection('selectEat')
-				const docData = {
-					historyData: this.fireStoreHistoryData,
-					selectData: this.fireStoreSelectData,
-					date: new Date(),
-				}
-
-				const result = await eats.add(docData)
-				alert(result.id)
+				this.saveFireStoreEatData() // firestore 데이터 저장
+				this.confirmCustom() // 상품유도 confirm
 			}
 		},
 
@@ -147,6 +152,32 @@ export default {
 			await this.setData()
 			await this.initVsList()
 		},
+
+		async saveFireStoreEatData() {
+			const eats = this.$fire.firestore.collection('selectEat')
+			const docData = {
+				historyData: this.fireStoreHistoryData,
+				selectData: this.fireStoreSelectData,
+				date: new Date(),
+			}
+
+			const result = await eats.add(docData)
+
+			this.fireStoreId = result.id
+		},
+
+		confirmCustom(firstoreId) {
+			this.$buefy.dialog.confirm({
+				title: '해당 상품을 구매해보시는 건 어떠세요?',
+				message: `<div class='has-text-centered'>${this.selectedEatObj[0].name}<br/>
+				${this.selectedEatObj[0].iframeLink}`,
+				cancelText: '됐습니다.',
+				confirmText: '좋습니다.',
+				type: 'is-success',
+				// onConfirm: () => this.$buefy.toast.open('User agreed'),
+				onConfirm: () => window.open(this.selectedEatObj[0].link),
+			})
+		},
 	},
 }
 </script>
@@ -161,5 +192,15 @@ export default {
 .fade-enter-from, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
 	opacity: 0;
 	transform: translateY(30px);
+}
+
+.modal-card-title {
+	font-size: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+	.modal .animation-content {
+		width: 90% !important;
+	}
 }
 </style>
