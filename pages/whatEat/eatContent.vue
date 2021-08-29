@@ -43,6 +43,7 @@
 					>내역보기</b-button
 				>
 			</div>
+
 			<b-button
 				v-else
 				type="is-link"
@@ -58,6 +59,7 @@
 				><span class="coupangStyle4">n</span
 				><span class="coupangStyle5">g</span> 구매하기</b-button
 			>
+			<!-- <a href="https://coupa.ng/b5NKpI">구매하기</a> -->
 		</div>
 	</div>
 </template>

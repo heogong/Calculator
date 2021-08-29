@@ -166,7 +166,7 @@ export default {
 			this.fireStoreId = result.id
 		},
 
-		confirmCustom(firstoreId) {
+		confirmCustom() {
 			this.$buefy.dialog.confirm({
 				title: '해당 상품을 구매해보시는 건 어떠세요?',
 				message: `<div class='has-text-centered'>${this.selectedEatObj[0].name}<br/>
@@ -174,10 +174,23 @@ export default {
 				cancelText: '됐습니다.',
 				confirmText: '좋습니다.',
 				type: 'is-success',
-				// onConfirm: () => this.$buefy.toast.open('User agreed'),
 				onConfirm: () => window.open(this.selectedEatObj[0].link),
 			})
 		},
+	},
+	head: {
+		title: '오늘 뭐 먹지? - 오늘의 메뉴를 정해보자!',
+		meta: [
+			{ charset: 'utf-8' },
+			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+			{
+				hid: '오늘 뭐 먹지?',
+				name:
+					'오늘 뭐 먹지?,뭐먹지?,음식,메뉴,오늘의메뉴,식사,오늘의식사,맛있는거,골라',
+				content:
+					'오늘 뭐 먹지?,뭐먹지?,음식,메뉴,오늘의메뉴,식사,오늘의식사,맛있는거,골라',
+			},
+		],
 	},
 }
 </script>
