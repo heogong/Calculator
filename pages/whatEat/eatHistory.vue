@@ -1,69 +1,5 @@
 <template>
 	<section>
-		<!-- <div class="block">
-			<b-field grouped group-multiline>
-				<div class="control">
-					<b-switch v-model="showSocial"> Show Social step </b-switch>
-				</div>
-				<div class="control">
-					<b-switch v-model="isAnimated"> Animated </b-switch>
-				</div>
-				<div class="control">
-					<b-switch v-model="isRounded"> Rounded </b-switch>
-				</div>
-				<div class="control">
-					<b-switch v-model="isStepsClickable"> Clickable Marker </b-switch>
-				</div>
-			</b-field>
-			<b-field grouped group-multiline>
-				<div class="control">
-					<b-switch v-model="hasNavigation"> Navigation Buttons </b-switch>
-				</div>
-				<div class="control">
-					<b-switch v-model="customNavigation"> Custom Navigation </b-switch>
-				</div>
-				<div class="control">
-					<b-switch v-model="isProfileSuccess">
-						Set <code>is-success</code> for profile
-					</b-switch>
-				</div>
-			</b-field>
-			<b-field v-if="hasNavigation" grouped group-multiline>
-				<b-field label="Prev icon">
-					<b-select v-model="prevIcon">
-						<option value="chevron-left">Chevron</option>
-						<option value="arrow-left">Arrow</option>
-					</b-select>
-				</b-field>
-				<b-field label="Next icon">
-					<b-select v-model="nextIcon">
-						<option value="chevron-right">Chevron</option>
-						<option value="arrow-right">Arrow</option>
-					</b-select>
-				</b-field>
-				<b-field label="Label position">
-					<b-select v-model="labelPosition">
-						<option value="bottom">Bottom</option>
-						<option value="right">Right</option>
-						<option value="left">Left</option>
-					</b-select>
-				</b-field>
-				<b-field label="Mobile mode">
-					<b-select v-model="mobileMode">
-						<option :value="null">-</option>
-						<option value="minimalist">Minimalist</option>
-						<option value="compact">Compact</option>
-					</b-select>
-				</b-field>
-				<b-field label="Mobile mode">
-					<b-select v-model="mobileMode">
-						<option :value="null">-</option>
-						<option value="minimalist">Minimalist</option>
-						<option value="compact">Compact</option>
-					</b-select>
-				</b-field>
-			</b-field>
-		</div> -->
 		<b-field class="has-text-centered">
 			<b-steps
 				v-model="activeStep"
@@ -98,18 +34,6 @@
 						/>
 					</b-step-item>
 				</template>
-
-				<!-- <b-step-item
-				step="1"
-				label="김치찌개 vs 된장찌개"
-				:clickable="isStepsClickable"
-			>
-				<h1 class="title has-text-centered">김치찌개</h1>
-				<img
-					:src="require(`~/assets/images/whatEat/chinese.jpg`)"
-					alt="Placeholder image"
-				/>
-			</b-step-item> -->
 				<template v-if="customNavigation" #navigation="{ previous, next }">
 					<b-button
 						outlined
@@ -175,10 +99,18 @@ export default {
 		historyId() {
 			return this.$route.query.historyId
 		},
+
+		dataLength() {
+			return this.selectEatData.length
+		},
 	},
 
 	created() {
 		this.initData()
+	},
+
+	updated() {
+		this.activeStep = this.dataLength - 1
 	},
 
 	methods: {
