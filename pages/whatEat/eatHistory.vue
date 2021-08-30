@@ -109,8 +109,11 @@ export default {
 		this.initData()
 	},
 
-	updated() {
-		this.activeStep = this.dataLength - 1
+	mounted() {
+		setTimeout(() => {
+			this.activeStep = this.dataLength - 1
+			this.confirmCustom()
+		}, 500)
 	},
 
 	methods: {
@@ -123,6 +126,21 @@ export default {
 			const snapshot = await eats.get()
 			this.historyEatData = snapshot.data().historyData
 			this.selectEatData = snapshot.data().selectData
+		},
+
+		confirmCustom() {
+			this.$buefy.dialog.confirm({
+				title: '해당 상품을 구매해보시는 건 어떠세요?',
+				message: `<div class='has-text-centered'>${
+					this.selectEatData[this.dataLength - 1].name
+				}<br/>
+				${this.selectEatData[this.dataLength - 1].iframeLink}`,
+				cancelText: '됐습니다.',
+				confirmText: '좋습니다.',
+				type: 'is-success',
+				onConfirm: () =>
+					window.open(this.selectEatData[this.dataLength - 1].link),
+			})
 		},
 	},
 }
