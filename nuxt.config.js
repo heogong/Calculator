@@ -106,6 +106,7 @@ export default {
 		[
 			'@nuxtjs/sitemap',
 			{
+				hostname: 'http://kakao.link',
 				sitemap: {
 					hostname: 'http://kakao.link',
 					gzip: true,

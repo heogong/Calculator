@@ -1,6 +1,6 @@
 <template>
 	<div class="contents-wrap">
-		<header-form></header-form>
+		<with-out-route-header-form></with-out-route-header-form>
 		<kakao-ad></kakao-ad>
 		<nuxt class="body" />
 		<kakao-ad2></kakao-ad2>
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import HeaderForm from '@/components/HeaderForm'
+import WithOutRouteHeaderForm from '@/components/WithOutRouteHeaderForm'
 import FooterForm from '@/components/FooterForm'
 import kakaoAd2 from '@/components/KakaoAd2'
 
 export default {
 	components: {
-		HeaderForm,
+		WithOutRouteHeaderForm,
 		FooterForm,
 		kakaoAd2,
 	},

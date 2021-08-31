@@ -48,6 +48,9 @@
 import axios from 'axios'
 import EatContent from './eatContent.vue'
 
+const APP_TITLE = '오늘 뭐 먹지?'
+const APP_DESC = '오늘 뭐 먹냐'
+
 export default {
 	layout: 'customEat',
 	components: {
@@ -82,7 +85,8 @@ export default {
 	},
 
 	async created() {
-		this.$store.commit('setAppTitle', '오늘 뭐 먹지?')
+		this.$store.commit('setAppTitle', APP_TITLE)
+		this.$store.commit('setAppDesc', APP_DESC)
 		await this.setData()
 		await this.initVsList()
 	},
@@ -191,6 +195,7 @@ export default {
 					'오늘뭐먹지,오늘 뭐 먹지?,뭐먹지?,음식,메뉴,오늘의메뉴,식사,오늘의식사,맛있는거,골라',
 			},
 		],
+		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon-16x16.png' }],
 	},
 }
 </script>
