@@ -107,10 +107,16 @@ export default {
 			'@nuxtjs/sitemap',
 			{
 				hostname: 'http://kakao.link',
-				sitemap: {
-					hostname: 'http://kakao.link',
-					gzip: true,
-				},
+				sitemaps: [
+					{
+						path: '/sitemap.xml',
+						gzip: true,
+					},
+					{
+						path: '/whatEat/sitemap.xml',
+						gzip: true,
+					},
+				],
 			},
 		],
 	],
