@@ -103,6 +103,15 @@ export default {
 				},
 			},
 		],
+		[
+			'@nuxtjs/sitemap',
+			{
+				sitemap: {
+					hostname: 'http://kakao.link',
+					gzip: true,
+				},
+			},
+		],
 	],
 	redirect: [{ from: '^/rate(.*)$', to: '/cmpRate' }],
 
