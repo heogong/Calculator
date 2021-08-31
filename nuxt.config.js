@@ -110,6 +110,9 @@ export default {
 					hostname: 'http://kakao.link',
 					gzip: true,
 				},
+				env: {
+					hostname: 'http://kakao.link',
+				},
 			},
 		],
 	],
