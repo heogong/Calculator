@@ -41,6 +41,16 @@ export default {
 				name: 'naver-site-verification',
 				content: 'c472b1dd3a03db222bdcfb288ba673a1df17f0f9',
 			},
+			{
+				hid: 'og:title',
+				property: 'og:title',
+				content: '더치페이계산기 - N빵 각빵 계산기',
+			},
+			{
+				hid: 'og:description',
+				property: 'og:description',
+				content: 'N차까지 각자 금액을 산출할 수 있는 더치페이 계산기 입니다.',
+			},
 		],
 		script: [
 			{
@@ -117,6 +127,15 @@ export default {
 						gzip: true,
 					},
 				],
+			},
+		],
+
+		[
+			'@nuxtjs/robots',
+			{
+				UserAgent: '*',
+				Disallow: '/',
+				sitemap: 'http://kakao.link/sitemap.xml',
 			},
 		],
 	],

@@ -194,6 +194,16 @@ export default {
 				content:
 					'오늘뭐먹지,오늘 뭐 먹지?,뭐먹지?,음식,메뉴,오늘의메뉴,식사,오늘의식사,맛있는거,골라',
 			},
+			{
+				hid: 'og:title',
+				property: 'og:title',
+				content: '오늘 뭐 먹지?',
+			},
+			{
+				hid: 'og:description',
+				property: 'og:description',
+				content: '오늘의 식사 메뉴를 정해보자!',
+			},
 		],
 		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon-16x16.png' }],
 	},
