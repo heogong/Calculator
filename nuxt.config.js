@@ -134,7 +134,7 @@ export default {
 			'@nuxtjs/robots',
 			{
 				UserAgent: '*',
-				Disallow: '/',
+				Allow: '/',
 				sitemap: 'http://kakao.link/sitemap.xml',
 			},
 		],
