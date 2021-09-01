@@ -374,6 +374,13 @@ export default {
 				content:
 					'정기금액 기능 및 일 / 월 / 연으로 표시 가능한 복리계산기 입니다.',
 			},
+			{ hid: 'og:title', property: 'og:title', content: '복리계산기' },
+			{
+				hid: 'og:description',
+				property: 'og:description',
+				content:
+					'정기금액 기능 및 일 / 월 / 연으로 표시 가능한 복리계산기 입니다.',
+			},
 		],
 	},
 }
