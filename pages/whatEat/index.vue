@@ -175,8 +175,8 @@ export default {
 				title: '해당 상품을 구매해보시는 건 어떠세요?',
 				message: `<div class='has-text-centered'>${this.selectedEatObj[0].name}<br/>
 				${this.selectedEatObj[0].iframeLink}`,
-				cancelText: '됐습니다.',
 				confirmText: '좋습니다.',
+				cancelText: '됐습니다.',
 				type: 'is-success',
 				onConfirm: () => window.open(this.selectedEatObj[0].link),
 			})
@@ -205,7 +205,7 @@ export default {
 				content: '오늘의 식사 메뉴를 정해보자!',
 			},
 		],
-		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon-16x16.png' }],
+		link: [{ rel: 'icon', type: 'image/x-icon', href: '/restaurant-48.png' }],
 	},
 }
 </script>
@@ -227,7 +227,7 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
-	.modal .animation-content {
+	.modal-card .animation-content {
 		width: 90% !important;
 	}
 }
